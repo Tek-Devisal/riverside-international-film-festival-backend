@@ -132,7 +132,7 @@ const editMovie = asyncHandler(async (req, res) => {
 });
 
 /*******************************************************************
- * DELETE A MOVIE 
+ * DELETE A MOVIE
  *  ******************************************************************/
 const deleteMovie = asyncHandler(async (req, res) => {
   try {
@@ -188,7 +188,7 @@ const viewMovie = asyncHandler(async (req, res) => {
 });
 
 /*******************************************************************
- * VIEW ALL MOVIE 
+ * VIEW ALL MOVIE
  * ******************************************************************/
 const viewAllMovie = asyncHandler(async (req, res) => {
   try {
@@ -210,10 +210,144 @@ const viewAllMovie = asyncHandler(async (req, res) => {
   }
 });
 
+/*******************************************************************
+ * LIKE A MOVIE
+ * ******************************************************************/
+const likeMovie = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { _id } = req.user;
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(id);
+    mongodbIdValidator(_id);
+
+    const movie = await Movie.findById(id);
+
+    if (!movie) {
+      return res.status(400).json({
+        success: false,
+        message: "Movie do not exist!",
+      });
+    }
+
+    // Check if the user already disliked the movie
+    const dislikeIndex = movie.dislikes.indexOf(_id);
+    if (dislikeIndex !== -1) {
+      movie.dislikes.splice(dislikeIndex, 1);
+    }
+
+    // Check if the user already liked the movie
+    const likeIndex = movie.likes.indexOf(_id);
+    if (likeIndex === -1) {
+      movie.likes.push(_id);
+    }
+
+    await movie.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Movie liked successfully",
+    });
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
+/*******************************************************************
+ * DISLIKE A MOVIE
+ * ******************************************************************/
+const disLikeMovie = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { _id } = req.user;
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(id);
+    mongodbIdValidator(_id);
+
+    const movie = await Movie.findById(id);
+
+    if (!movie) {
+      return res.status(400).json({
+        success: false,
+        message: "Movie do not exist!",
+      });
+    }
+
+    // Check if the user already liked the movie
+    const likeIndex = movie.likes.indexOf(_id);
+    if (likeIndex !== -1) {
+      movie.likes.splice(likeIndex, 1);
+    }
+
+    // Check if the user already disliked the movie
+    const dislikeIndex = movie.dislikes.indexOf(_id);
+    if (dislikeIndex === -1) {
+      movie.dislikes.push(_id);
+    }
+
+    await movie.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Movie disliked successfully",
+    });
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
+/*******************************************************************
+ * RATING A MOVIE
+ * ******************************************************************/
+const rateMovie = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { _id } = req.user;
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(id);
+    mongodbIdValidator(_id);
+
+    const movie = await Movie.findById(id);
+
+    if (!movie) {
+      return res.status(400).json({
+        success: false,
+        message: "Movie do not exist!",
+      });
+    }
+
+    const userRatingIndex = movie.ratings.findIndex(
+      (item) => item.userId.toString() === userId
+    );
+    if (userRatingIndex !== -1) {
+      // User already rated the movie, update the rating
+      movie.ratings[userRatingIndex].rating = rating;
+    } else {
+      // User hasn't rated the movie yet, add new rating
+      movie.ratings.push({ userId, rating });
+    }
+
+    await movie.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Movie rated successfully",
+    });
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
 module.exports = {
   createMovie,
   editMovie,
   deleteMovie,
   viewMovie,
   viewAllMovie,
+  likeMovie,
+  disLikeMovie,
+  rateMovie,
 };

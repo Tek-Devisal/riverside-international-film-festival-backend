@@ -13,11 +13,11 @@ const scheduleSchema = new mongoose.Schema(
       required: true,
     },
     time: {
-      type: String,
+      type: Date,
       required: true,
     },
     date: {
-      type: Number,
+      type: Date,
       required: true,
     },
   },

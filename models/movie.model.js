@@ -12,7 +12,6 @@ const movieSchema = new mongoose.Schema(
       filename: String,
       contentType: String,
       data: Buffer,
-      required: true,
     },
     duration: {
       type: String,
@@ -26,9 +25,14 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    rating: Number,
-    likes: Number,
-    disLikes: Number,
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    dislikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    ratings: [
+      {
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        rating: Number,
+      },
+    ],
     cast: [
       {
         name: String,

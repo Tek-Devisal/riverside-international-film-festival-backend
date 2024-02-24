@@ -39,7 +39,7 @@ app.use(notFound);
 connectToDatabase();
 
 app.get("/", (req, res) => {
-  res.send("Server is working!");
+  res.send("Welcome to the backend :)");
 });
 
 //Listening on a specified port

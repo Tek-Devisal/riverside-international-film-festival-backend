@@ -18,10 +18,10 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
         //Decode the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const admin = await User.findById(decoded?.id);
+        const user = await User.findById(decoded?.id);
 
-        //Save the admin instance to req.admin
-        req.admin = admin;
+        //Save the user instance to req.user
+        req.user = user;
         next();
       }
     } catch (error) {
@@ -36,12 +36,30 @@ const authenticate = asyncHandler(async (req, res, next) => {
   }
 });
 
-const isCreator = asyncHandler(async (req, res, next) => {
-  const creatorId = req.user._id;
-  if (creatorId.role !== "creator") throw new Error("You are not a creator");
-  if (creatorId.role === "creator") {
+const creator = asyncHandler(async (req, res, next) => {
+  const user = req.user;
+  if (user.role !== "creator") {
+    return res.status(400).json({
+      success: false,
+      message: "You are not a creator!",
+    });
+  }
+  if (user.role === "creator") {
     next();
   }
 });
 
-module.exports = { authenticate, isCreator };
+const admin = asyncHandler(async (req, res, next) => {
+  const user = req.user;
+  if (user.role !== "admin") {
+    return res.status(400).json({
+      success: false,
+      message: "You are not an admin!",
+    });
+  }
+  if (user.role === "admin") {
+    next();
+  }
+});
+
+module.exports = { authenticate, creator, admin };

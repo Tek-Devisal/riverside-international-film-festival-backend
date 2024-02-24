@@ -7,6 +7,9 @@ const {
   deleteMovie,
   viewMovie,
   viewAllMovie,
+  rateMovie,
+  disLikeMovie,
+  likeMovie,
 } = require("../controllers/movie.controller");
 const { authenticate } = require("../middlewares/auth.middleware");
 
@@ -19,6 +22,9 @@ router.get("/", viewAllMovie);
 
 //Put routes
 router.put("/update", authenticate, editMovie);
+router.put("/like", authenticate, likeMovie);
+router.put("/dislike", authenticate, disLikeMovie);
+router.put("/rate", authenticate, rateMovie);
 
 //Delete routes
 router.post("/delete", deleteMovie);
