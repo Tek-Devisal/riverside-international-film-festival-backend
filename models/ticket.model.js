@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const ticketSchema = new mongoose.Schema(
   {
+    creatorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     movieId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Movie",

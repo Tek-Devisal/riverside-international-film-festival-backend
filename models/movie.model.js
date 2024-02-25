@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema(
   {
+    creatorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     name: {
       type: String,
       trim: true,
@@ -25,11 +30,24 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    dislikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    dislikes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     ratings: [
       {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
         rating: Number,
       },
     ],

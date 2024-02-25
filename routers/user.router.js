@@ -17,6 +17,8 @@ const { authenticate } = require("../middlewares/auth.middleware");
 router.post("/login", login);
 router.post("/signup", signup);
 router.post("/password-token", passwordToken);
+router.post("/generate-otp", passwordToken);
+router.post("/verify-otp", passwordToken);
 
 //Get routes
 router.get("/logout", logout);

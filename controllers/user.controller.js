@@ -5,12 +5,16 @@ const sendEmail = require("../configs/email.config");
 const { generateToken } = require("../configs/token.config");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const otpGenerator = require("otp-generator");
 
 // Blacklist for invalidated tokens
 const tokenBlacklist = new Set();
 
 //Temporary storage for reset tokens
 const resetTokens = {};
+
+//Temporary storage for OTPss
+const OTPs = {};
 
 /********************************************************************************************************************************************
  * Create an account
@@ -332,6 +336,74 @@ const logout = asyncHandler(async (req, res) => {
   }
 });
 
+/********************************************************************************************************************************************
+ * GENERATE OTP
+ */
+const generateOtp = asyncHandler(async (req, res) => {
+  try {
+    const { email } = req.user;
+
+    const user = await User.findOne({ email });
+
+    if (!user)
+      res.status(400).json({
+        success: false,
+        message: "User not found with this email address",
+      });
+
+    const otp = otpGenerator.generate(6, {
+      digits: true,
+      alphabets: false,
+      upperCase: false,
+      specialChars: false,
+    });
+
+    OTPs[email] = { otp };
+
+    try {
+      sendEmail({
+        email: user.email,
+        subject: "Reset your password",
+        message: `Hello ${user.name}, your OTP is ${otp}`,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "OTP sent to your email",
+      });
+    } catch (error) {
+      res.status(400).json(error.message);
+    }
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+/********************************************************************************************************************************************
+ * VERIFY OTP
+ */
+const verifyOtp = asyncHandler(async (req, res) => {
+  try {
+    const storedOtp = OTPs[email];
+    const { enteredOtp } = req.body;
+
+    if (storedOtp === enteredOtp) {
+      // OTP is correct
+      res.status(200).json({
+        success: true,
+        message: "OTP verification successful",
+      });
+    } else {
+      // OTP is incorrect
+      res.status(400).json({
+        success: false,
+        message: "Incorrect OTP",
+      });
+    }
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
 module.exports = {
   login,
   signup,
@@ -342,4 +414,5 @@ module.exports = {
   resetPassword,
   update,
   tokenBlacklist,
+  generateOtp,
 };

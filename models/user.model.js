@@ -18,9 +18,15 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       trim: true,
-      default: 'user',
+      default: "user",
       required: true,
     },
+    tickets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tickets",
+      },
+    ],
     password: {
       type: String,
       required: true,

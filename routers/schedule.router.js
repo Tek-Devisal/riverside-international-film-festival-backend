@@ -18,9 +18,9 @@ router.get("/:id", viewSchedule);
 router.get("/", viewAllSchedule);
 
 //Put routes
-router.put("/update", authenticate, editSchedule);
+router.put("/update/:id", authenticate, editSchedule);
 
 //Delete routes
-router.post("/delete", deleteSchedule);
+router.post("/delete/:id", deleteSchedule);
 
 module.exports = router;

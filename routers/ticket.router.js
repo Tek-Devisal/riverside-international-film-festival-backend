@@ -18,9 +18,9 @@ router.get("/:id", viewTicket);
 router.get("/", viewAllTicket);
 
 //Put routes
-router.put("/update", authenticate, editTicket);
+router.put("/update/:id", authenticate, editTicket);
 
 //Delete routes
-router.post("/delete", deleteTicket);
+router.post("/delete/:id", deleteTicket);
 
 module.exports = router;
