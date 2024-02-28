@@ -11,16 +11,16 @@ const {
 const { authenticate } = require("../middlewares/auth.middleware");
 
 //Post routes
-router.post("/add", createTicket);
+router.post("/add", authenticate, createTicket);
 
 //Get routes
-router.get("/:id", viewTicket);
-router.get("/", viewAllTicket);
+router.get("/:id", authenticate, viewTicket);
+router.get("/", authenticate, viewAllTicket);
 
 //Put routes
 router.put("/update/:id", authenticate, editTicket);
 
 //Delete routes
-router.post("/delete/:id", deleteTicket);
+router.delete("/delete/:id", authenticate, deleteTicket);
 
 module.exports = router;

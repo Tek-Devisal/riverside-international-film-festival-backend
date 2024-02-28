@@ -7,7 +7,7 @@ const mongodbIdValidator = require("../configs/mongoIdValidator.config");
  *  ******************************************************************/
 const createTicket = asyncHandler(async (req, res) => {
   try {
-    const { quantity, price, movieId, scheduleId } = req.body;
+    const { quantity, price, movieId, scheduleId, creatorId } = req.body;
 
     //REQUIRED FIELDS
     if (!quantity || !price || !scheduleId || !movieId) {
@@ -18,7 +18,7 @@ const createTicket = asyncHandler(async (req, res) => {
     }
 
     //CHECK IF TICKET ALREADY EXIST
-    if (await Ticket.findOne({ name }))
+    if (await Ticket.findOne({ movieId }))
       return res.status(400).json({
         success: false,
         message: "Ticket already exists!",
@@ -26,6 +26,7 @@ const createTicket = asyncHandler(async (req, res) => {
 
     //CREATE NEW TICKET
     new Ticket({
+      creatorId,
       quantity,
       price,
       movieId,

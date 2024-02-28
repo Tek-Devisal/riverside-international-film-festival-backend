@@ -7,7 +7,7 @@ const mongodbIdValidator = require("../configs/mongoIdValidator.config");
  *  ******************************************************************/
 const createSchedule = asyncHandler(async (req, res) => {
   try {
-    const { location, time, date, movieId } = req.body;
+    const { location, time, date, movieId, creatorId } = req.body;
 
     //REQUIRED FIELDS
     if (!location || !time || !date) {
@@ -30,6 +30,7 @@ const createSchedule = asyncHandler(async (req, res) => {
       time,
       date,
       movieId,
+      creatorId,
     }).save();
 
     //SEND A SUCCESS MESSAGE
@@ -48,7 +49,7 @@ const createSchedule = asyncHandler(async (req, res) => {
 const editSchedule = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { disLikes, cast } = req.body;
+    const { location, time, date } = req.body;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);

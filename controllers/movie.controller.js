@@ -8,6 +8,7 @@ const mongodbIdValidator = require("../configs/mongoIdValidator.config");
 const createMovie = asyncHandler(async (req, res) => {
   try {
     const {
+      creatorId,
       name,
       duration,
       releasedDate,
@@ -19,15 +20,7 @@ const createMovie = asyncHandler(async (req, res) => {
     } = req.body;
 
     //REQUIRED FIELDS
-    if (
-      !name ||
-      !duration ||
-      !releasedDate ||
-      !description ||
-      !rating ||
-      !likes ||
-      !disLikes
-    ) {
+    if (!name || !duration || !releasedDate || !description) {
       return res.status(400).json({
         success: false,
         message: "A required field was not provided",
@@ -43,13 +36,12 @@ const createMovie = asyncHandler(async (req, res) => {
 
     //CREATE NEW MOVIE
     new Movie({
-      ...(req.files["thumbnail"] && {
-        thumbnail: {
-          filename: req.files["thumbnail"][0].originalname,
-          contentType: req.files["thumbnail"][0].mimetype,
-          data: req.files["thumbnail"][0].buffer,
-        },
-      }),
+      // thumbnail: {
+      //   filename: req.file.originalname,
+      //   contentType: req.file.mimetype,
+      //   data: req.file.buffer,
+      // },
+      creatorId,
       name,
       duration,
       releasedDate,
@@ -94,13 +86,11 @@ const editMovie = asyncHandler(async (req, res) => {
     const update = await Movie.findByIdAndUpdate(
       id,
       {
-        ...(req.files["thumbnail"] && {
-          thumbnail: {
-            filename: req.files["thumbnail"][0].originalname,
-            contentType: req.files["thumbnail"][0].mimetype,
-            data: req.files["thumbnail"][0].buffer,
-          },
-        }),
+        // thumbnail: {
+        //   filename: req.file.originalname,
+        //   contentType: req.file.mimetype,
+        //   data: req.file.buffer,
+        // },
         name,
         duration,
         releasedDate,
