@@ -23,8 +23,11 @@ const userSchema = new mongoose.Schema(
     },
     tickets: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tickets",
+        ticket: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Tickets",
+        },
+        quantity: Number,
       },
     ],
     password: {

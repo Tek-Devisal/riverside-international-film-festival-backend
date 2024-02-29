@@ -8,19 +8,19 @@ const {
   viewSchedule,
   viewAllSchedule,
 } = require("../controllers/schedule.controller");
-const { authenticate } = require("../middlewares/auth.middleware");
+const { authenticate, creator } = require("../middlewares/auth.middleware");
 
 //Post routes
-router.post("/add", authenticate, createSchedule);
+router.post("/add", authenticate, creator, createSchedule);
 
 //Get routes
 router.get("/:id", authenticate, viewSchedule);
 router.get("/", authenticate, viewAllSchedule);
 
 //Put routes
-router.put("/update/:id", authenticate, editSchedule);
+router.put("/update/:id", authenticate, creator, editSchedule);
 
 //Delete routes
-router.delete("/delete/:id", authenticate, deleteSchedule);
+router.delete("/delete/:id", authenticate, creator, deleteSchedule);
 
 module.exports = router;

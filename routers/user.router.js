@@ -10,6 +10,8 @@ const {
   resetPassword,
   update,
   signup,
+  verifyOtp,
+  generateOtp,
 } = require("../controllers/user.controller");
 const { authenticate } = require("../middlewares/auth.middleware");
 
@@ -17,8 +19,8 @@ const { authenticate } = require("../middlewares/auth.middleware");
 router.post("/login", login);
 router.post("/signup", signup);
 router.post("/password-token", passwordToken);
-router.post("/generate-otp", passwordToken);
-router.post("/verify-otp", passwordToken);
+router.post("/generate-otp", generateOtp);
+router.post("/verify-otp", verifyOtp);
 
 //Get routes
 router.get("/logout", logout);
@@ -30,6 +32,5 @@ router.put("/update-password", authenticate, updatePassword);
 router.put("/reset-password/:token", resetPassword);
 
 //Delete routes
-
 
 module.exports = router;

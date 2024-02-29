@@ -2,6 +2,10 @@ const Movie = require("../models/movie.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
 
+//const isReviewed = product.reviews.find(
+//(rev) => rev.user._id === req.user._id
+//);
+
 /*******************************************************************
  * CREATE A MOVIE
  *  ******************************************************************/

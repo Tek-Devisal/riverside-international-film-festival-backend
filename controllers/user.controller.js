@@ -341,7 +341,7 @@ const logout = asyncHandler(async (req, res) => {
  */
 const generateOtp = asyncHandler(async (req, res) => {
   try {
-    const { email } = req.user;
+    const { email } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -415,4 +415,5 @@ module.exports = {
   update,
   tokenBlacklist,
   generateOtp,
+  verifyOtp,
 };

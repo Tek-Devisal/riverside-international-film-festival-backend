@@ -8,19 +8,19 @@ const {
   viewTicket,
   viewAllTicket,
 } = require("../controllers/ticket.controller");
-const { authenticate } = require("../middlewares/auth.middleware");
+const { authenticate, creator } = require("../middlewares/auth.middleware");
 
 //Post routes
-router.post("/add", authenticate, createTicket);
+router.post("/add", authenticate, creator, createTicket);
 
 //Get routes
 router.get("/:id", authenticate, viewTicket);
 router.get("/", authenticate, viewAllTicket);
 
 //Put routes
-router.put("/update/:id", authenticate, editTicket);
+router.put("/update/:id", authenticate, creator, editTicket);
 
 //Delete routes
-router.delete("/delete/:id", authenticate, deleteTicket);
+router.delete("/delete/:id", authenticate, creator, deleteTicket);
 
 module.exports = router;
