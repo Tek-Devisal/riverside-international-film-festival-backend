@@ -1,0 +1,727 @@
+{
+	"info": {
+		"_postman_id": "85a1e15a-8906-4908-a20d-1ca45a91b6b9",
+		"name": "Riverside International Film Festival",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27208738"
+	},
+	"item": [
+		{
+			"name": "Tickets",
+			"item": [
+				{
+					"name": "Add a ticket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"creatorId\": \"6599dfbd58a7daa449f7452d\",\r\n    \"movieId\": \"6599dfbd58a7daa449f7462d\",\r\n    \"scheduleId\": \"6599dfbd58a7daa449f7562d\",\r\n    \"quantity\": \"3\",\r\n    \"price\": \"250\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticket}}/add",
+							"host": [
+								"{{ticket}}"
+							],
+							"path": [
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticket}}/:id",
+							"host": [
+								"{{ticket}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df15869039eae89f8a5bc4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticket}}/",
+							"host": [
+								"{{ticket}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a ticket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticket}}/delete/:id",
+							"host": [
+								"{{ticket}}"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df15869039eae89f8a5bc4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a ticket",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": \"400\",\r\n    \"price\": \"2345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticket}}/update/:id",
+							"host": [
+								"{{ticket}}"
+							],
+							"path": [
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df15869039eae89f8a5bc4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Add a movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"creatorId\": \"65df15869039eae89f8a5bc4\",\r\n    \"name\": \"Gyaese12\",\r\n    \"duration\": \"25min\",\r\n    \"releasedDate\": \"2023\",\r\n    \"description\": \"this movie is based on the history of technology\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{movie}}/add",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a movie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df1dd0948149edd8b895ec"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/delete/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df1dd0948149edd8b895ec"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a movie",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Avatar 3\",\r\n    \"duration\": \"225min\",\r\n    \"releasedDate\": \"2009\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{movie}}/update/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65df1dd0948149edd8b895ec"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like a movie",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/like/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"like",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike a movie",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/dislike/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"dislike",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rate a movie",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{movie}}/rate/:id",
+							"host": [
+								"{{movie}}"
+							],
+							"path": [
+								"rate",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/login",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"sgyan1\",\r\n    \"email\": \"sethgyan587@gmail.com\",\r\n    \"role\": \"creator\",\r\n    \"password\": \"Yomonii1z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user}}/signup",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sethgyan587@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user}}/generate-otp",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"generate-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/verify-otp",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/password-token",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"password-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/refresh",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/logout",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/update",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/update-password",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{user}}/reset-password/:token",
+							"host": [
+								"{{user}}"
+							],
+							"path": [
+								"reset-password",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedules",
+			"item": [
+				{
+					"name": "Add a schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"creatorId\": \"6599dfbd58a7daa449f7452d\",\r\n    \"movieId\": \"6599dfbd58a7daa449f7462d\",\r\n    \"location\": \"Accra\",\r\n    \"time\": \"2024-01-06T23:18:21.800+00:00\",\r\n    \"date\": \"2024-01-06T23:18:21.800+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schedule}}/add",
+							"host": [
+								"{{schedule}}"
+							],
+							"path": [
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a schedule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schedule}}/:id",
+							"host": [
+								"{{schedule}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65def676cdc2a0e92080c809"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all schedule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schedule}}/",
+							"host": [
+								"{{schedule}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a schedule",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{schedule}}/delete/:id",
+							"host": [
+								"{{schedule}}"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65def676cdc2a0e92080c809"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a schedule",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location\": \"Kumasi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schedule}}/update/:id",
+							"host": [
+								"{{schedule}}"
+							],
+							"path": [
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65def676cdc2a0e92080c809"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Default",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}",
+					"host": [
+						"{{base}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base",
+			"value": "http://localhost:3001/",
+			"type": "string"
+		},
+		{
+			"key": "movie",
+			"value": "http://localhost:3001/api/v1/movie",
+			"type": "string"
+		},
+		{
+			"key": "ticket",
+			"value": "http://localhost:3001/api/v1/ticket",
+			"type": "string"
+		},
+		{
+			"key": "schedule",
+			"value": "http://localhost:3001/api/v1/schedule",
+			"type": "string"
+		},
+		{
+			"key": "user",
+			"value": "http://localhost:3001/api/v1/user",
+			"type": "string"
+		}
+	]
+}
