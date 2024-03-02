@@ -7,7 +7,8 @@ const mongodbIdValidator = require("../configs/mongoIdValidator.config");
  *  ******************************************************************/
 const createSchedule = asyncHandler(async (req, res) => {
   try {
-    const { location, time, date, movieId, creatorId } = req.body;
+    const { location, time, date, movieId } = req.body;
+    const creatorId = req.user._id;
 
     //REQUIRED FIELDS
     if (!location || !time || !date) {
@@ -16,6 +17,9 @@ const createSchedule = asyncHandler(async (req, res) => {
         message: "A required field was not provided",
       });
     }
+    
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(creatorId);
 
     //CHECK IF SCHEDULE ALREADY EXIST
     if (await Schedule.findOne({ movieId }))
@@ -23,6 +27,7 @@ const createSchedule = asyncHandler(async (req, res) => {
         success: false,
         message: "Schedule already exists!",
       });
+
 
     //CREATE NEW SCHEDULE
     new Schedule({
@@ -50,12 +55,23 @@ const editSchedule = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const { location, time, date } = req.body;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
+
+        const schedule = await Schedule.findById(id);
+
+        if (schedule.creatorId !== creatorId) {
+          return res.status(400).json({
+            success: false,
+            message: "You are not the creator of this schedule!",
+          });
+        }
 
     //UPDATE A SCHEDULE
-    const update = await Schedule.findByIdAndUpdate(
+    const updatedSchedule = await Schedule.findByIdAndUpdate(
       id,
       {
         location,
@@ -65,7 +81,7 @@ const editSchedule = asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    if (!update) {
+    if (!updatedSchedule) {
       return res.status(400).json({
         success: false,
         message: "Schedule do not exist!",
@@ -76,7 +92,7 @@ const editSchedule = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Schedule updated!",
-      data: update,
+      data: updatedSchedule,
     });
   } catch (error) {
     res.status(400).json(error.message);
@@ -89,13 +105,24 @@ const editSchedule = asyncHandler(async (req, res) => {
 const deleteSchedule = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
 
-    const schedule = await Schedule.findByIdAndDelete(id);
+    const schedule = await Schedule.findById(id);
 
-    if (!schedule) {
+    if (schedule.creatorId !== creatorId) {
+      return res.status(400).json({
+        success: false,
+        message: "You are not the creator of this schedule!",
+      });
+    }
+    //DELETE A SCHEDULE
+    const deletedSchedule = await Schedule.findByIdAndDelete(id);
+
+    if (!deletedSchedule) {
       return res.status(400).json({
         success: false,
         message: "Schedule do not exist!",

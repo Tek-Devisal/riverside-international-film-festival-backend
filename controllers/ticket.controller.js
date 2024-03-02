@@ -7,15 +7,19 @@ const mongodbIdValidator = require("../configs/mongoIdValidator.config");
  *  ******************************************************************/
 const createTicket = asyncHandler(async (req, res) => {
   try {
-    const { quantity, price, movieId, scheduleId, creatorId } = req.body;
+    const { price, movieId, scheduleId } = req.body;
+    const creatorId = req.user._id;
 
     //REQUIRED FIELDS
-    if (!quantity || !price || !scheduleId || !movieId) {
+    if (!price || !scheduleId || !movieId) {
       return res.status(400).json({
         success: false,
         message: "A required field was not provided",
       });
     }
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(creatorId);
 
     //CHECK IF TICKET ALREADY EXIST
     if (await Ticket.findOne({ movieId }))
@@ -27,7 +31,6 @@ const createTicket = asyncHandler(async (req, res) => {
     //CREATE NEW TICKET
     new Ticket({
       creatorId,
-      quantity,
       price,
       movieId,
       scheduleId,
@@ -49,23 +52,33 @@ const createTicket = asyncHandler(async (req, res) => {
 const editTicket = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { quantity, price, movieId, scheduleId } = req.body;
+    const { price, scheduleId } = req.body;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
+
+    const ticket = await Ticket.findById(id);
+
+    if (ticket.creatorId !== creatorId) {
+      return res.status(400).json({
+        success: false,
+        message: "You are not the creator of this ticket!",
+      });
+    }
 
     //UPDATE A TICKET
-    const update = await Ticket.findByIdAndUpdate(
+    const updatedTicket = await Ticket.findByIdAndUpdate(
       id,
       {
-        quantity,
         price,
         scheduleId,
       },
       { new: true }
     );
 
-    if (!update) {
+    if (!updatedTicket) {
       return res.status(400).json({
         success: false,
         message: "Ticket do not exist!",
@@ -76,7 +89,7 @@ const editTicket = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Ticket updated!",
-      data: update,
+      data: updatedTicket,
     });
   } catch (error) {
     res.status(400).json(error.message);
@@ -89,13 +102,24 @@ const editTicket = asyncHandler(async (req, res) => {
 const deleteTicket = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
 
-    const ticket = await Ticket.findByIdAndDelete(id);
+    const ticket = await Ticket.findById(id);
 
-    if (!ticket) {
+    if (ticket.creatorId !== creatorId) {
+      return res.status(400).json({
+        success: false,
+        message: "You are not the creator of this ticket!",
+      });
+    }
+    //DELETE A TICKET
+    const deletedTicket = await Ticket.findByIdAndDelete(id);
+
+    if (!deletedTicket) {
       return res.status(400).json({
         success: false,
         message: "Ticket do not exist!",

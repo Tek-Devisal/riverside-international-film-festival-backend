@@ -28,11 +28,17 @@ router.post(
 );
 
 //Get routes
-router.get("/:id", upload.single("thumbnail"), authenticate, viewMovie);
+router.get("/:id", authenticate, viewMovie);
 router.get("/", authenticate, viewAllMovie);
 
 //Put routes
-router.put("/update/:id", authenticate, creator, editMovie);
+router.put(
+  "/update/:id",
+  authenticate,
+  upload.single("thumbnail"),
+  creator,
+  editMovie
+);
 router.put("/like/:id", authenticate, likeMovie);
 router.put("/dislike/:id", authenticate, disLikeMovie);
 router.put("/rate/:id", authenticate, rateMovie);

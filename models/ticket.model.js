@@ -18,8 +18,10 @@ const ticketSchema = new mongoose.Schema(
       ref: "Schedule",
       required: true,
     },
-    quantity: Number,
-    price: Number,
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );

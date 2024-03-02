@@ -2,17 +2,12 @@ const Movie = require("../models/movie.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
 
-//const isReviewed = product.reviews.find(
-//(rev) => rev.user._id === req.user._id
-//);
-
 /*******************************************************************
  * CREATE A MOVIE
  *  ******************************************************************/
 const createMovie = asyncHandler(async (req, res) => {
   try {
     const {
-      creatorId,
       name,
       duration,
       releasedDate,
@@ -22,6 +17,7 @@ const createMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
+    const creatorId = req.user._id;
 
     //REQUIRED FIELDS
     if (!name || !duration || !releasedDate || !description) {
@@ -30,6 +26,9 @@ const createMovie = asyncHandler(async (req, res) => {
         message: "A required field was not provided",
       });
     }
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(creatorId);
 
     //CHECK IF MOVIE ALREADY EXIST
     if (await Movie.findOne({ name }))
@@ -82,12 +81,23 @@ const editMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
+
+    const movie = await Movie.findById(id);
+
+    if (movie.creatorId !== creatorId) {
+      return res.status(400).json({
+        success: false,
+        message: "You are not the creator of this movie!",
+      });
+    }
 
     //UPDATE A MOVIE
-    const update = await Movie.findByIdAndUpdate(
+    const updatedMovie = await Movie.findByIdAndUpdate(
       id,
       {
         // thumbnail: {
@@ -107,7 +117,7 @@ const editMovie = asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    if (!update) {
+    if (!updatedMovie) {
       return res.status(400).json({
         success: false,
         message: "Movie do not exist!",
@@ -118,7 +128,7 @@ const editMovie = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Movie updated!",
-      data: update,
+      data: updatedMovie,
     });
   } catch (error) {
     res.status(400).json(error.message);
@@ -131,13 +141,24 @@ const editMovie = asyncHandler(async (req, res) => {
 const deleteMovie = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+    const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
+    mongodbIdValidator(creatorId);
 
-    const movie = await Movie.findByIdAndDelete(id);
+    const movie = await Movie.findById(id);
 
-    if (!movie) {
+    if (movie.creatorId !== creatorId) {
+      return res.status(400).json({
+        success: false,
+        message: "You are not the creator of this movie!",
+      });
+    }
+
+    const deletedMovie = await Movie.findByIdAndDelete(id);
+
+    if (!deletedMovie) {
       return res.status(400).json({
         success: false,
         message: "Movie do not exist!",
@@ -210,11 +231,11 @@ const viewAllMovie = asyncHandler(async (req, res) => {
 const likeMovie = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { _id } = req.user;
+    const userId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
-    mongodbIdValidator(_id);
+    mongodbIdValidator(userId);
 
     const movie = await Movie.findById(id);
 
@@ -226,15 +247,15 @@ const likeMovie = asyncHandler(async (req, res) => {
     }
 
     // Check if the user already disliked the movie
-    const dislikeIndex = movie.dislikes.indexOf(_id);
+    const dislikeIndex = movie.dislikes.indexOf(userId);
     if (dislikeIndex !== -1) {
       movie.dislikes.splice(dislikeIndex, 1);
     }
 
     // Check if the user already liked the movie
-    const likeIndex = movie.likes.indexOf(_id);
+    const likeIndex = movie.likes.indexOf(userId);
     if (likeIndex === -1) {
-      movie.likes.push(_id);
+      movie.likes.push(userId);
     }
 
     await movie.save();
@@ -254,11 +275,11 @@ const likeMovie = asyncHandler(async (req, res) => {
 const disLikeMovie = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { _id } = req.user;
+    const userId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
-    mongodbIdValidator(_id);
+    mongodbIdValidator(userId);
 
     const movie = await Movie.findById(id);
 
@@ -270,15 +291,15 @@ const disLikeMovie = asyncHandler(async (req, res) => {
     }
 
     // Check if the user already liked the movie
-    const likeIndex = movie.likes.indexOf(_id);
+    const likeIndex = movie.likes.indexOf(userId);
     if (likeIndex !== -1) {
       movie.likes.splice(likeIndex, 1);
     }
 
     // Check if the user already disliked the movie
-    const dislikeIndex = movie.dislikes.indexOf(_id);
+    const dislikeIndex = movie.dislikes.indexOf(userId);
     if (dislikeIndex === -1) {
-      movie.dislikes.push(_id);
+      movie.dislikes.push(userId);
     }
 
     await movie.save();
@@ -293,16 +314,16 @@ const disLikeMovie = asyncHandler(async (req, res) => {
 });
 
 /*******************************************************************
- * RATING A MOVIE
+ * RATE A MOVIE
  * ******************************************************************/
 const rateMovie = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const { _id } = req.user;
+    const userId = req.user._id;
 
     //VALIDATE MONGODB ID
     mongodbIdValidator(id);
-    mongodbIdValidator(_id);
+    mongodbIdValidator(userId);
 
     const movie = await Movie.findById(id);
 

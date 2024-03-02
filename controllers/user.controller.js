@@ -7,38 +7,39 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const otpGenerator = require("otp-generator");
 
-// Blacklist for invalidated tokens
+//BLACKLIST FOR INVALIDATED TOKENS
 const tokenBlacklist = new Set();
 
-//Temporary storage for reset tokens
+//TEMPORARY STORAGE FOR RESET TOKENS
 const resetTokens = {};
 
-//Temporary storage for OTPss
+//TEMPORARY STORAGE FOR OTPS
 const OTPs = {};
 
-/********************************************************************************************************************************************
- * Create an account
- */
-const signup = asyncHandler(async (req, res) => {
+/*******************************************************************
+ * CREATE AN ACCOUNT
+ *  ******************************************************************/
+const createAccount = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    //TAKE INPUTS FROM REQUEST
     const { email, password, username, role } = req.body;
 
-    //Check for inputs in required fields
+    //CHECK FOR INPUTS IN REQUIRED FIELDS
     if (!email || !password || !username) {
       return res.status(400).json({
         success: false,
         message: "A required field was not provided",
       });
     }
-    //Check if email already exists
+
+    //CHECK IF EMAIL ALREADY EXISTS
     if (await User.findOne({ email }))
       return res.status(400).json({
         success: false,
         message: "User already exists",
       });
 
-    //Create new user
+    //CREATE A NEW USER
     new User({
       email,
       password,
@@ -46,7 +47,7 @@ const signup = asyncHandler(async (req, res) => {
       role,
     }).save();
 
-    //Send a success message
+    //SEND A SUCCESS RESPOND
     res.status(200).json({
       success: true,
       message: "Account created successfully!",
@@ -56,15 +57,15 @@ const signup = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- * Login
- */
+/*******************************************************************
+ * LOGIN
+ *  ******************************************************************/
 const login = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    //TAKE INPUTS FROM REQUEST
     const { email, password } = req.body;
 
-    //Check for inputs in required fields
+    //CHECK FOR INPUTS IN REQUIRED FIELDS
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -72,29 +73,28 @@ const login = asyncHandler(async (req, res) => {
       });
     }
 
-    //Check if email already exists
-    const user = await User.findOne({
-      email,
-    });
+    //CHECK IF EMAIL ALREADY EXISTS
+    const user = await User.findOne({ email });
 
-    //If email does not exist, a fail message is sent
+    //SEND A FAILED RESPOND
     if (!user)
       return res.status(400).json({
         success: false,
         message: "User not found",
       });
 
-    //Check if password corresponds to the current user
+    //CHECK IF PASSWORD MATCHES USER'S PASSWORD
     if (user && (await user.isPasswordMatched(password))) {
       const token = generateToken(user._id);
 
-      //Create a cokie
+      //CREATE A COOKIE
       res.cookie("token", token, {
         httpOnly: true,
         maxAge: 1 * 60 * 60 * 1000,
         secure: false,
       });
 
+      //SEND A SUCCESS RESPOND
       res.status(200).json({
         success: true,
         message: "User logged in successfully!",
@@ -105,6 +105,7 @@ const login = asyncHandler(async (req, res) => {
         },
       });
     } else {
+      //SEND A FAILED RESPOND
       res.status(400).json({
         success: false,
         message: "Invalid credentials",
@@ -115,15 +116,16 @@ const login = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- *Create a refresh token
- */
+/*******************************************************************
+ * CREATE A REFRESH TOKEN
+ *  ******************************************************************/
 const refresh = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    //TAKE INPUTS FROM REQUEST
     const { _id } = req.user;
     const { token } = req.cookies;
 
+    //SEND A FAILED RESPOND
     if (!token)
       res.status(400).json({
         success: false,
@@ -132,12 +134,14 @@ const refresh = asyncHandler(async (req, res) => {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err || _id != decoded.id) {
+        //SEND A FAILED RESPOND
         res.status(400).json({
           success: false,
           message: "There is something wrong with token",
         });
       }
 
+      //SEND A SUCCESS RESPOND
       res.status(200).json({
         success: true,
         data: generateToken(_id),
@@ -148,32 +152,39 @@ const refresh = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- * Create a password reset token
- */
+/*******************************************************************
+ * CREATE A PASSWORD RESET TOKEN
+ *  ******************************************************************/
 const passwordToken = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    //TAKE INPUTS FROM REQUEST
     const { email } = req.body;
 
+    //CHECK IF EMAIL ALREADY EXISTS
     const user = await User.findOne({ email });
 
+    //SEND A FAILED RESPOND
     if (!user)
       res.status(400).json({
         success: false,
         message: "User not found with this email address",
       });
 
+    //CREATE A TOKEN
     const token = crypto
       .createHash("sha256")
       .update(crypto.randomBytes(32).toString("hex"))
       .digest("hex");
+
+      //CREATE EXPIRATION DATE
     const expirationTime = new Date(Date.now() + 5 * 60 * 1000);
 
+    //STORE TOKEN AND EXPIRATION TIME
     resetTokens[email] = { token, expirationTime };
 
     const activationUrl = `<a href= https://localhost/api/v1/user/reset-password/${token}> Reset Password </a>`;
 
+    //SEND AN EMAIL
     try {
       sendEmail({
         email: user.email,
@@ -181,6 +192,7 @@ const passwordToken = asyncHandler(async (req, res) => {
         message: `Hello ${user.name}, please click on the link to reset your password. This link is valid for 10 minutes from now. ${activationUrl}`,
       });
 
+      //SEND A SUCCESS RESPOND
       res.status(200).json({
         success: true,
         message: `Please check your email:- ${user.email} to reset your password!`,
@@ -193,31 +205,36 @@ const passwordToken = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- * Update password
- */
+/*******************************************************************
+ * UPDATE PASSWORD
+ *  ******************************************************************/
 const updatePassword = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
-    const { _id } = req.user;
+    //TAKE INPUTS FROM REQUEST
+    const userId = req.user._id;
     const { oldPassword, newPassword } = req.body;
 
-    //Validate mongodb ID
-    mongodbIdValidator(_id);
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(userId);
 
-    const user = await User.findById(_id).select("+password");
+    //SELECT A USER'S PASSWORD
+    const user = await User.findById(userId).select("+password");
 
+    //CHECK IF PASSWORD MATCHES OLD PASSWORD
     const checkPassword = await user.isPasswordMatched(oldPassword);
 
+    //SEND A FAILED RESPOND
     if (!checkPassword)
       res.status(400).send({
         success: false,
         message: "Old password is incorrect!",
       });
 
+    //SET PASSWORD TO CURRENT
     user.password = newPassword;
     await user.save();
 
+    //SEND A SUCCESS RESPOND
     res.status(200).json({
       success: true,
       message: "Password updated successfully",
@@ -227,40 +244,46 @@ const updatePassword = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- * Reset password
- */
+/*******************************************************************
+ * RESET PASSWORD
+ *  ******************************************************************/
 const resetPassword = asyncHandler(async (req, res) => {
   try {
+    //TAKE INPUTS FROM REQUEST
     const { token } = req.params;
     const { email, newPassword } = req.body;
     const storedToken = resetTokens[email];
 
-    const user = await User.findOneAndUpdate(
-      { email },
-      { password: newPassword }
-    );
-
-    if (!user)
-      res.status(400).json({
-        success: false,
-        message: "Token expired, please try again later",
-      });
-
-    // Check if the token is valid
+    // CHECK IF TOKEN IS VALID
     if (
       storedToken ||
       storedToken !== token ||
       new Date() > new Date(storedToken.expirationTime)
     ) {
+      //SEND A FAILED RESPOND
       return res.status(400).json({
         success: false,
         message: "Invalid or expired token",
       });
     }
 
+    //FIND USER AND UPDATE PASSWORD
+    const user = await User.findOneAndUpdate(
+      { email },
+      { password: newPassword }
+    );
+
+    //SEND A FAILED RESPOND
+    if (!user)
+      res.status(400).json({
+        success: false,
+        message: "Token expired, please try again later",
+      });
+
+    //DELETE STORED TOKEN
     delete storedToken;
 
+    //SEND A SUCCESS RESPOND
     res.status(200).json({
       success: true,
       message: "Password reset successfully!",
@@ -270,18 +293,19 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- * Update an user
- */
+/*******************************************************************
+ * UPDATE A USER
+ *  ******************************************************************/
 const update = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    //TAKE INPUTS FROM REQUEST
     const { _id } = req.user;
     const { email, password } = req.body;
 
-    //Validate mongodb ID
+    //VALIDATE MONGODB ID
     mongodbIdValidator(_id);
 
+    //FIND USER AND UPDATE
     const update = await User.findByIdAndUpdate(
       _id,
       {
@@ -293,6 +317,7 @@ const update = asyncHandler(async (req, res) => {
       }
     );
 
+    //SEND A FAILED RESPOND
     if (!update) {
       return res.status(400).json({
         success: false,
@@ -300,6 +325,7 @@ const update = asyncHandler(async (req, res) => {
       });
     }
 
+    //SEND A SUCCESS RESPOND
     res.status(200).json({
       success: true,
       message: "User updated",
@@ -309,48 +335,58 @@ const update = asyncHandler(async (req, res) => {
   }
 });
 
-/********************************************************************************************************************************************
- *Logout
- */
+/*******************************************************************
+ * LOGOUT
+ *  ******************************************************************/
 const logout = asyncHandler(async (req, res) => {
   try {
+    //TAKE INPUTS FROM REQUEST
     const token = req.cookies.token;
+
+    //SEND A FAILED RESPOND
     if (!token) res.status(400).send("No token in cookies");
 
-    // Add the token to the blacklist
+    //BLACKLIST TOKEN
     tokenBlacklist.add(token);
 
+    //CLEAR COOKIES
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,
     });
 
+    //SEND A SUCCESS RESPOND
     res.status(200).json({
       success: true,
       message: "Log out successfully",
     });
 
-    res.sendStatus(403); //FORBIDDEN
+    //FORBIDDEN
+    res.sendStatus(403);
   } catch (error) {
     res.status(400).json(error.message);
   }
 });
 
-/********************************************************************************************************************************************
+/*******************************************************************
  * GENERATE OTP
- */
+ *  ******************************************************************/
 const generateOtp = asyncHandler(async (req, res) => {
   try {
+    //TAKE INPUTS FROM REQUEST
     const { email } = req.body;
 
+    //FIND USER WITH EMAIL
     const user = await User.findOne({ email });
 
+    //SEND A FAILED RESPOND
     if (!user)
       res.status(400).json({
         success: false,
         message: "User not found with this email address",
       });
 
+    //GENERATE OTP
     const otp = otpGenerator.generate(6, {
       digits: true,
       alphabets: false,
@@ -360,6 +396,7 @@ const generateOtp = asyncHandler(async (req, res) => {
 
     OTPs[email] = { otp };
 
+    //SEND AN EMAIL TO USER
     try {
       sendEmail({
         email: user.email,
@@ -367,6 +404,7 @@ const generateOtp = asyncHandler(async (req, res) => {
         message: `Hello ${user.name}, your OTP is ${otp}`,
       });
 
+      //SEND A SUCCESS RESPOND
       res.status(200).json({
         success: true,
         message: "OTP sent to your email",
@@ -378,22 +416,24 @@ const generateOtp = asyncHandler(async (req, res) => {
     res.status(400).json(error.message);
   }
 });
-/********************************************************************************************************************************************
+
+/*******************************************************************
  * VERIFY OTP
- */
+ *  ******************************************************************/
 const verifyOtp = asyncHandler(async (req, res) => {
   try {
-    const storedOtp = OTPs[email];
+    //TAKE INPUTS FROM REQUEST
     const { enteredOtp } = req.body;
+    const storedOtp = OTPs[email];
 
     if (storedOtp === enteredOtp) {
-      // OTP is correct
+      // CORRECT OTP
       res.status(200).json({
         success: true,
         message: "OTP verification successful",
       });
     } else {
-      // OTP is incorrect
+      // INCORRECT OTP
       res.status(400).json({
         success: false,
         message: "Incorrect OTP",
@@ -406,7 +446,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
 
 module.exports = {
   login,
-  signup,
+  createAccount,
   passwordToken,
   logout,
   refresh,

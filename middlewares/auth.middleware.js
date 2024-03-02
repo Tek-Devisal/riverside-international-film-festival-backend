@@ -3,12 +3,15 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const { tokenBlacklist } = require("../controllers/user.controller");
 
+/*******************************************************************
+ * AUTHENTICATE ALL USERS
+ *  ******************************************************************/
 const authenticate = asyncHandler(async (req, res, next) => {
   if (req?.headers?.authorization.startsWith("Bearer")) {
     const token = req.headers.authorization.split(" ")[1];
     try {
       if (token) {
-        //Check if token is already in blacklisted tokens
+        //CHECK IF TOKEN IS BLACKLISTED
         if (tokenBlacklist.has(token)) {
           return res.status(400).json({
             success: false,
@@ -16,11 +19,11 @@ const authenticate = asyncHandler(async (req, res, next) => {
           });
         }
 
-        //Decode the token
+        //DECODE THE TOKEN
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded?.id);
 
-        //Save the user instance to req.user
+        //SAVE THE USER INSTANCE TO REQ.USER
         req.user = user;
         next();
       }
@@ -36,28 +39,38 @@ const authenticate = asyncHandler(async (req, res, next) => {
   }
 });
 
+/*******************************************************************
+ * AUTHENTICATE CREATOR
+ *  ******************************************************************/
 const creator = asyncHandler(async (req, res, next) => {
-  const user = req.user;
-  if (user.role !== "creator") {
+  const creator = req.user;
+
+  //IF USER IS NOT A CREATOR
+  if (creator.role !== "creator") {
     return res.status(400).json({
       success: false,
       message: "You are not a creator!",
     });
   }
-  if (user.role === "creator") {
+  if (creator.role === "creator") {
     next();
   }
 });
 
+/*******************************************************************
+ * AUTHENTICATE ADMIN
+ *  ******************************************************************/
 const admin = asyncHandler(async (req, res, next) => {
-  const user = req.user;
-  if (user.role !== "admin") {
+  const admin = req.user;
+
+  //IF USER IS NOT AN ADMIN
+  if (admin.role !== "admin") {
     return res.status(400).json({
       success: false,
       message: "You are not an admin!",
     });
   }
-  if (user.role === "admin") {
+  if (admin.role === "admin") {
     next();
   }
 });
