@@ -17,6 +17,7 @@ const createMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
+    const { thumbnail } = req.file.path;
     const creatorId = req.user._id;
 
     //REQUIRED FIELDS
@@ -39,11 +40,7 @@ const createMovie = asyncHandler(async (req, res) => {
 
     //CREATE NEW MOVIE
     new Movie({
-      // thumbnail: {
-      //   filename: req.file.originalname,
-      //   contentType: req.file.mimetype,
-      //   data: req.file.buffer,
-      // },
+      thumbnail,
       creatorId,
       name,
       duration,
@@ -81,6 +78,7 @@ const editMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
+    const { thumbnail } = req.file.path;
     const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID
@@ -100,11 +98,7 @@ const editMovie = asyncHandler(async (req, res) => {
     const updatedMovie = await Movie.findByIdAndUpdate(
       id,
       {
-        // thumbnail: {
-        //   filename: req.file.originalname,
-        //   contentType: req.file.mimetype,
-        //   data: req.file.buffer,
-        // },
+        thumbnail,
         name,
         duration,
         releasedDate,

@@ -14,9 +14,8 @@ const movieSchema = new mongoose.Schema(
       required: true,
     },
     thumbnail: {
-      filename: String,
-      contentType: String,
-      data: Buffer,
+      type: String,
+      required: true,
     },
     duration: {
       type: String,

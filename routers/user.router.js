@@ -15,22 +15,22 @@ const {
 } = require("../controllers/user.controller");
 const { authenticate } = require("../middlewares/auth.middleware");
 
-//Post routes
+//POST ROUTES
 router.post("/login", login);
 router.post("/signup", createAccount);
 router.post("/password-token", passwordToken);
 router.post("/generate-otp", generateOtp);
 router.post("/verify-otp", verifyOtp);
 
-//Get routes
+//GET ROUTES
 router.get("/logout", logout);
 router.get("/refresh", refresh);
 
-//Put routes
+//PUT ROUTES
 router.put("/update", authenticate, update);
 router.put("/update-password", authenticate, updatePassword);
 router.put("/reset-password/:token", resetPassword);
 
-//Delete routes
+//DELETE ROUTES
 
 module.exports = router;

@@ -18,7 +18,7 @@ const {
   creator,
 } = require("../middlewares/auth.middleware");
 
-//Post routes
+//POST ROUTES
 router.post(
   "/add",
   upload.single("thumbnail"),
@@ -27,11 +27,11 @@ router.post(
   createMovie
 );
 
-//Get routes
+//GET ROUTES
 router.get("/:id", authenticate, viewMovie);
 router.get("/", authenticate, viewAllMovie);
 
-//Put routes
+//PUT ROUTES
 router.put(
   "/update/:id",
   authenticate,
@@ -43,7 +43,7 @@ router.put("/like/:id", authenticate, likeMovie);
 router.put("/dislike/:id", authenticate, disLikeMovie);
 router.put("/rate/:id", authenticate, rateMovie);
 
-//Delete routes
+//DELETE ROUTES
 router.delete("/delete/:id", authenticate, creator, deleteMovie);
 
 module.exports = router;

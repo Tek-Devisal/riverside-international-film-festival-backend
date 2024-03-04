@@ -1,16 +1,16 @@
 const bcrypt = require("bcrypt");
 
 function encryptionAndPasswordComp(Schema) {
-  //Encrypting password before saving
+  //ENCRYPTING PASSWORD BEFORE SAVING
   Schema.pre("save", async function (next) {
     if (!this.isModified("password")) {
       next();
     }
-    const salt = await bcrypt.genSaltSync(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt =  bcrypt.genSaltSync(10);
+    this.password =  bcrypt.hash(this.password, salt);
   });
 
-  //Comparing entered password to password in database
+  //COMPARING ENTERED PASSWORD TO PASSWORD IN DATABASE
   Schema.methods.isPasswordMatched = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
   };
