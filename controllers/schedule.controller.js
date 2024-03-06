@@ -1,6 +1,7 @@
 const Schedule = require("../models/schedule.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
+const ticket_purchasesModel = require("../models/ticket_purchases.model.js");
 
 /*******************************************************************
  * CREATE A SCHEDULE
@@ -162,10 +163,48 @@ const viewAllSchedule = asyncHandler(async (req, res) => {
   }
 });
 
+const byDaySchedule = asyncHandler(async (req, res) => {
+  try {
+    const { buyerId, day } = req.body; // Assume day is passed as 0 (Sunday) to 6 (Saturday), and 10 for all days
+    // Fetch tickets for the buyer and populate both schedule and movie details
+    const tickets = await ticket_purchasesModel.find({ buyerId }).populate({
+      path: 'scheduleId',
+      populate: {
+        path: 'movieId',
+        model: 'Movie' // Ensure this matches the name of your movie model
+      }
+    });
+
+    // Filter tickets based on the specified day, unless day is 10 which fetches all schedules
+    const filteredSchedules = tickets.filter(ticket => {
+      if (day === 10) {
+        // If day is 10, return true for all tickets to include all schedules
+        return true;
+      } else {
+        // Otherwise, filter by the specified day
+        const scheduleDate = new Date(ticket.scheduleId.date);
+        return scheduleDate.getDay() === day;
+      }
+    }).map(ticket => ticket.scheduleId); // Directly use scheduleId which already includes movie details
+
+    // Respond with filtered schedules
+    res.status(200).json({
+      success: true,
+      data: filteredSchedules,
+    });
+  } catch (error) {
+    console.error("Failed to fetch schedules by day:", error);
+    res.status(400).json({ success: false, message: error.message });
+  }
+
+});
+
+
 module.exports = {
   createSchedule,
   editSchedule,
   deleteSchedule,
   viewSchedule,
   viewAllSchedule,
+  byDaySchedule
 };

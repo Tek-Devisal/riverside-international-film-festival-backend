@@ -1,12 +1,14 @@
 const Ticket = require("../models/ticket.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
+const { creator } = require("../middlewares/auth.middleware.js");
 
 /*******************************************************************
  * CREATE A TICKET
  *  ******************************************************************/
 const createTicket = asyncHandler(async (req, res) => {
   try {
+    console.log(res.quantity);
     const { quantity, price, movieId, scheduleId, creatorId } = req.body;
 
     //REQUIRED FIELDS
@@ -37,6 +39,14 @@ const createTicket = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Ticket added successfully!",
+      data: {
+        'creatorId': '',
+        'movieId': '', 
+        'scheduleId': '',
+        'quantity': 1,
+        'price': 1
+      ,
+      }
     });
   } catch (error) {
     return res.status(400).json(error.message);
@@ -144,7 +154,18 @@ const viewTicket = asyncHandler(async (req, res) => {
  * ******************************************************************/
 const viewAllTicket = asyncHandler(async (req, res) => {
   try {
-    const tickets = await Ticket.find();
+    // Fetch tickets and populate creator and movie details
+    const tickets = await Ticket.find()
+    .populate('creatorId', 'username email role') // Populate the ticket creator details
+    .populate({
+      path: 'movieId', // Populate the movie details
+      populate: [
+        { path: 'creatorId', select: 'username email' }, // Populate the movie creator's details
+        { path: 'likes', select: 'username' }, // Populate the users who liked the movie
+        { path: 'dislikes', select: 'username' }, // Populate the users who disliked the movie
+        { path: 'ratings.userId', select: 'username rating' }, // Populate the ratings along with the user details
+      ]
+    });
 
     if (tickets.length === 0) {
       return res.status(400).json({
@@ -162,10 +183,51 @@ const viewAllTicket = asyncHandler(async (req, res) => {
   }
 });
 
+/*******************************************************************
+ * VIEW TICKETS BY CREATOR ID
+ * ******************************************************************/
+const fetchTicketsByCreatorId = asyncHandler(async (req, res) => {
+  try {
+    const { creatorId } = req.params; // Assuming creatorId is passed as a URL parameter
+
+    // Validate MongoDB ID format for creatorId
+    mongodbIdValidator(creatorId);
+
+    // Fetch tickets and populate creator and movie details
+    const tickets = await Ticket.find({ creatorId: creatorId })
+      // .populate('creatorId', 'username email role') // Populate the ticket creator details
+      // .populate({
+      //   path: 'movieId', // Populate the movie details
+      //   populate: [
+      //     { path: 'creatorId', select: 'username email' }, // Populate the movie creator's details
+      //     { path: 'likes', select: 'username' }, // Populate the users who liked the movie
+      //     { path: 'dislikes', select: 'username' }, // Populate the users who disliked the movie
+      //     { path: 'ratings.userId', select: 'username rating' } // Populate the ratings along with the user details
+      //   ]
+      // });
+
+    if (tickets.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No tickets found for the provided creator ID",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: tickets,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+});
+
+
 module.exports = {
   createTicket,
   editTicket,
   deleteTicket,
   viewTicket,
   viewAllTicket,
+  fetchTicketsByCreatorId
 };

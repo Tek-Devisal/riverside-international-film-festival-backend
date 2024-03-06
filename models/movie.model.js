@@ -13,6 +13,13 @@ const movieSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    genre: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: false,
+      default: "action"
+    },
     thumbnail: {
       filename: String,
       contentType: String,

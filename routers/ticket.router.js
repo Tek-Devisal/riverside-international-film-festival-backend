@@ -7,15 +7,20 @@ const {
   deleteTicket,
   viewTicket,
   viewAllTicket,
+  fetchTicketsByCreatorId,
 } = require("../controllers/ticket.controller");
 const { authenticate, creator } = require("../middlewares/auth.middleware");
+const { purchaseTicket, fetchTicketsByBuyerId } = require("../controllers/ticket_purchases.controller");
 
 //Post routes
 router.post("/add", authenticate, creator, createTicket);
+router.post("/purchaseTicket", authenticate, purchaseTicket);
 
 //Get routes
 router.get("/:id", authenticate, viewTicket);
 router.get("/", authenticate, viewAllTicket);
+router.get('/fetchTicketByCreatorId/:creatorId', authenticate, fetchTicketsByCreatorId);
+router.get('/fetchTicketsByBuyerId/:buyerId', authenticate, fetchTicketsByBuyerId);
 
 //Put routes
 router.put("/update/:id", authenticate, creator, editTicket);

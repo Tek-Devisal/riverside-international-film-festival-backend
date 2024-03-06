@@ -98,9 +98,11 @@ const login = asyncHandler(async (req, res) => {
       res.status(200).json({
         success: true,
         message: "User logged in successfully!",
-        data: {
+        user: {
+          _id: user.id,
           name: user.name,
           email: user.email,
+          username: user.username,
           token: token,
         },
       });

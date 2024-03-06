@@ -1,7 +1,8 @@
 const Movie = require("../models/movie.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
-
+const path = require("path"); // Import the 'path' module
+const fs = require("fs");
 //const isReviewed = product.reviews.find(
 //(rev) => rev.user._id === req.user._id
 //);
@@ -23,6 +24,9 @@ const createMovie = asyncHandler(async (req, res) => {
       cast,
     } = req.body;
 
+    // Access the uploaded file details
+    const { originalname, mimetype, buffer } = req.file;
+
     //REQUIRED FIELDS
     if (!name || !duration || !releasedDate || !description) {
       return res.status(400).json({
@@ -38,13 +42,17 @@ const createMovie = asyncHandler(async (req, res) => {
         message: "Movie already exists!",
       });
 
+    // Save the file to the specified folder
+    const targetPath = path.join(__dirname, "uploads", originalname);
+    fs.writeFileSync(targetPath, buffer);
+
     //CREATE NEW MOVIE
     new Movie({
-      // thumbnail: {
-      //   filename: req.file.originalname,
-      //   contentType: req.file.mimetype,
-      //   data: req.file.buffer,
-      // },
+      thumbnail: {
+        filename: req.file.originalname,
+        contentType: req.file.mimetype,
+        data: req.file.buffer,
+      },
       creatorId,
       name,
       duration,
@@ -197,12 +205,97 @@ const viewAllMovie = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       success: true,
+      // data: movies,
       data: movies,
     });
   } catch (error) {
     res.status(400).json(error.message);
   }
 });
+
+/*******************************************************************
+ * VIEW ALL MOVIE BY GENRE
+ * ******************************************************************/
+const viewAllMovieByGenre = asyncHandler(async (req, res) => {
+  try {
+    const { genre } = req.body;
+    
+    console.log(genre)
+    
+    // Build the query conditionally based on the genre parameter
+    let query = {};
+    if (genre && genre.toLowerCase() !== 'all') {
+      query.genre = genre;
+    }
+  
+    // Use the query object directly in the find() method
+    const movies = await Movie.find(query);
+  
+    if (movies.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No movies found!",
+      });
+    }
+  
+    res.status(200).json({
+      success: true,
+      data: movies,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+  
+});
+
+// const viewAllMovieByGenreV2 = asyncHandler(async (req, res) => {
+//   try {
+//     const { genre } = req.body;
+    
+//     console.log(genre)
+    
+//     // Build the query conditionally based on the genre parameter
+//     let query = {};
+//     if (genre && genre.toLowerCase() !== 'all') {
+//       query.genre = genre;
+//     }
+  
+//     // Use the query object directly in the find() method
+//     const movies = await Movie.find(query);
+  
+//     if (movies.length === 0) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "No movies found!",
+//       });
+//     }
+
+//     // Extract movie IDs
+//     const movieIds = movies.map(movie => movie._id);
+
+//     // Find tickets and schedules related to these movies
+//     const ticketsPromise = ticketModel.find({ movieId: { $in: movieIds } })
+//                                  .populate('creatorId', 'username email')
+//                                  .populate('scheduleId');
+//     const schedulesPromise = scheduleModel.find({ movieId: { $in: movieIds } })
+//                                       .populate('creatorId', 'username email');
+
+//     const [tickets, schedules] = await Promise.all([movies, ticketsPromise, schedulesPromise]);
+
+//     // Respond with tickets and schedules related to movies of the specified genre
+//     res.status(200).json({
+//       success: true,
+//       data: {
+//         tickets: tickets,
+//         schedules: schedules,
+//       },
+//     });
+
+//   } catch (error) {
+//     res.status(400).json({ success: false, message: error.message });
+//   }
+  
+// });
 
 /*******************************************************************
  * LIKE A MOVIE
@@ -335,6 +428,36 @@ const rateMovie = asyncHandler(async (req, res) => {
   }
 });
 
+
+const viewLikesAndDislikes = asyncHandler(async (req, res) => {
+  try {
+    const movieId = req.params.id;
+
+    const movie = await Movie.findById(movieId).select('likes dislikes').exec();
+
+    if (!movie) {
+      return res.status(404).json({ success: false, message: "Movie not found" });
+    }
+
+    // Count the number of likes and dislikes
+    const likesCount = movie.likes.length;
+    const dislikesCount = movie.dislikes.length;
+
+    res.json({
+      success: true,
+      data: {
+        likes: movie.likes,
+        dislikes: movie.dislikes,
+        likesCount,
+        dislikesCount
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+
 module.exports = {
   createMovie,
   editMovie,
@@ -344,4 +467,6 @@ module.exports = {
   likeMovie,
   disLikeMovie,
   rateMovie,
+  viewAllMovieByGenre,
+  viewLikesAndDislikes
 };

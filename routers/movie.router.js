@@ -10,6 +10,8 @@ const {
   rateMovie,
   disLikeMovie,
   likeMovie,
+  viewAllMovieByGenre,
+  viewLikesAndDislikes,
 } = require("../controllers/movie.controller");
 const { upload } = require("../middlewares/multer.middleware");
 const {
@@ -26,10 +28,12 @@ router.post(
   creator,
   createMovie
 );
+router.post("/moviesByGenre", authenticate, viewAllMovieByGenre);
 
 //Get routes
 router.get("/:id", upload.single("thumbnail"), authenticate, viewMovie);
 router.get("/", authenticate, viewAllMovie);
+router.get("/likes-dislikes/:id", authenticate, viewLikesAndDislikes);
 
 //Put routes
 router.put("/update/:id", authenticate, creator, editMovie);
