@@ -11,11 +11,14 @@ const fs = require("fs");
  * CREATE A MOVIE
  *  ******************************************************************/
 const createMovie = asyncHandler(async (req, res) => {
+  // Movie.dropIndex("genre_1");
+
   try {
     const {
       creatorId,
       name,
       duration,
+      genre,
       releasedDate,
       description,
       rating,
@@ -47,27 +50,31 @@ const createMovie = asyncHandler(async (req, res) => {
     fs.writeFileSync(targetPath, buffer);
 
     //CREATE NEW MOVIE
-    new Movie({
+    const savedMovie = new Movie({
       thumbnail: {
         filename: req.file.originalname,
         contentType: req.file.mimetype,
-        data: req.file.buffer,
+        // data: req.file.buffer,
       },
       creatorId,
       name,
       duration,
+      genre,
       releasedDate,
       description,
       rating,
       likes,
       disLikes,
       cast,
-    }).save();
+    });
+    
+    savedMovie.save();
 
     //SEND A SUCCESS MESSAGE
     res.status(200).json({
       success: true,
       message: "Movie added successfully!",
+      data: savedMovie
     });
   } catch (error) {
     return res.status(400).json(error.message);

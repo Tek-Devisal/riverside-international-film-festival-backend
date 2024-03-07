@@ -1,5 +1,6 @@
 const { errorHandler, notFound } = require("./configs/errorHandler.config");
 const connectToDatabase = require("./configs/dbConnect.config");
+const path = require('path');
 
 //dotenv config
 require("dotenv").config();
@@ -24,6 +25,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+
+//serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //API connections
 app.use("/api/v1/user", userRouter);
