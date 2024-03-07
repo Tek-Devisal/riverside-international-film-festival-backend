@@ -17,7 +17,7 @@ const createMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
-    const { thumbnail } = req.file.path;
+    const thumbnail = req.file.path;
     const creatorId = req.user._id;
 
     //REQUIRED FIELDS
@@ -78,7 +78,7 @@ const editMovie = asyncHandler(async (req, res) => {
       disLikes,
       cast,
     } = req.body;
-    const { thumbnail } = req.file.path;
+    const thumbnail = req.file.path;
     const creatorId = req.user._id;
 
     //VALIDATE MONGODB ID

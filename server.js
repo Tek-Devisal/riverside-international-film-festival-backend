@@ -15,6 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const cors = require("cors");
 const app = express();
 
@@ -34,6 +35,9 @@ app.use("/api/v1/schedule", scheduleRouter);
 //Error handler and not found handler
 app.use(errorHandler);
 app.use(notFound);
+
+// Serve static files from the 'uploads' directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //Connecting to database
 connectToDatabase();

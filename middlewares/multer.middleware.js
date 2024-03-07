@@ -1,4 +1,5 @@
 const multer = require("multer");
+const path = require("path");
 
 // MULTER FOR HANDLING FILE UPLOADS
 const storage = multer.diskStorage({
