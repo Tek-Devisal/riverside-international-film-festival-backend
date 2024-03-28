@@ -48,7 +48,7 @@ const purchaseTicket = asyncHandler(async (req, res) => {
     }
 
     const ticketId = ticket._id;
-    console.log(ticketId);
+    // console.log(ticketId);
 
     // Create new ticket purchase
     await new ticket_purchasesModel({
@@ -67,6 +67,57 @@ const purchaseTicket = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Ticket purchased successfully!",
+      data:[
+        {
+          "_id": "65ea6afb5efd00ce63c8baf9",
+          "buyerId": {
+            "_id": "65e3cfef9c171b9f63d2c9a3",
+            "username": "janim2",
+            "email": "iamjesse75@gmail.com",
+            "role": "creator"
+          },
+          "ticketId": {
+            "_id": "65ea6ccda72a0ce97cc7d329",
+            "creatorId": "65e3cfef9c171b9f63d2c9a3",
+            "movieId": {
+              "thumbnail": {
+                "filename": "avengers.jpg",
+                "contentType": "application/octet-stream"
+              },
+              "_id": "65e900fd86be09d6198d886c",
+              "creatorId": {
+                "_id": "65e3cfef9c171b9f63d2c9a3",
+                "username": "janim2",
+                "email": "iamjesse75@gmail.com"
+              },
+              "name": "Avengers",
+              "genre": "action",
+              "duration": "20",
+              "releasedDate": "2023",
+              "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+              "likes": [],
+              "dislikes": [],
+              "cast": [],
+              "ratings": [],
+              "createdAt": "2024-03-06T23:49:17.708Z",
+              "updatedAt": "2024-03-06T23:49:17.708Z",
+              "__v": 0
+            },
+            "scheduleId": "65e9ddaf0229f628fb9fc6d6",
+            "quantity": 100,
+            "price": 10,
+            "createdAt": "2024-03-08T01:41:33.883Z",
+            "updatedAt": "2024-03-08T01:41:33.883Z",
+            "__v": 0
+          },
+          "scheduleId": "65e9ddaf0229f628fb9fc6d6",
+          "quantity": 1,
+          "price": 250,
+          "createdAt": "2024-03-08T01:33:47.070Z",
+          "updatedAt": "2024-03-08T01:33:47.070Z",
+          "__v": 0
+        }
+      ]
     });
   } catch (error) {
     console.error("Purchase Ticket Error:", error);

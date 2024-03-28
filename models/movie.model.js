@@ -63,7 +63,7 @@ const movieSchema = new mongoose.Schema(
         image: {
           filename: String,
           contentType: String,
-          data: Buffer,
+          // data: Buffer,
         },
       },
     ],

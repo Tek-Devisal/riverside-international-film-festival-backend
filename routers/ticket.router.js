@@ -8,6 +8,7 @@ const {
   viewTicket,
   viewAllTicket,
   fetchTicketsByCreatorId,
+  fetchByMovieAndSchedule
 } = require("../controllers/ticket.controller");
 const { authenticate, creator } = require("../middlewares/auth.middleware");
 const { purchaseTicket, fetchTicketsByBuyerId } = require("../controllers/ticket_purchases.controller");
@@ -15,6 +16,7 @@ const { purchaseTicket, fetchTicketsByBuyerId } = require("../controllers/ticket
 //Post routes
 router.post("/add", authenticate, creator, createTicket);
 router.post("/purchaseTicket", authenticate, purchaseTicket);
+router.post("/fetchByMovieAndSchedule", authenticate, fetchByMovieAndSchedule);
 
 //Get routes
 router.get("/:id", authenticate, viewTicket);
