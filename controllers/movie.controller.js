@@ -220,7 +220,7 @@ const viewAllMovie = asyncHandler(async (req, res) => {
   }
 });
 
-/*******************************************************************
+/********************************************************************
  * VIEW ALL MOVIE BY GENRE
  * ******************************************************************/
 const viewAllMovieByGenre = asyncHandler(async (req, res) => {
