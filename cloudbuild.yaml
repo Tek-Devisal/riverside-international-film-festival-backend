@@ -1,0 +1,18 @@
+steps:
+  - name: node:18.18.2
+    entrypoint: npm
+    args: ["install"]
+  - name: node:18.18.2
+    entrypoint: npm
+    args: ["run", "create-env"]
+    # env:
+    #   - "MY_SECRET_KEY=${_MY_SECRET_KEY}"
+    #   - "PAYSTACK_KEY=${_PAYSTACK_KEY}"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]
+timeout: "1600s"
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+# substitutions:
+#   _PAYSTACK_KEY: "h4234j43ll1kj12f@lkj2ds#da"
