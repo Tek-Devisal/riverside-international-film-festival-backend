@@ -5,8 +5,8 @@ steps:
   - name: node:18.18.2
     entrypoint: npm
     args: ["run", "create-env"]
-    # env:
-    #   - "MY_SECRET_KEY=${_MY_SECRET_KEY}"
+    env:
+      - "JWT_SECRET=${_JWT_SECRET}"
     #   - "PAYSTACK_KEY=${_PAYSTACK_KEY}"
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
