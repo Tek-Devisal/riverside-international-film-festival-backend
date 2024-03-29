@@ -13,6 +13,10 @@
 
 ## Getting Started
 
+## Summary
+This backend contains the feature where i can uplaod a movie, and add tickets for that movie and add a schedule for the movie also. 
+The users can in turn pay for the ticket per movie. 
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (>=12.0.0)
