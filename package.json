@@ -5,10 +5,9 @@
   "main": "/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "build": "",
-    "create-env": "printenv > .env"
-
+    "dev": "nodemon server",
+    "start": "node server",
+    "build": ""
   },
   "author": "Riverside International Film Festival",
   "license": "ISC",
