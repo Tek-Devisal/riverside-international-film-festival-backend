@@ -26,18 +26,13 @@ const createSchedule = asyncHandler(async (req, res) => {
       });
 
     //CREATE NEW SCHEDULE
-    new Schedule({
-      location,
-      time,
-      date,
-      movieId,
-      creatorId,
-    }).save();
+    const result =  await Schedule.create({...req.body});
 
     //SEND A SUCCESS MESSAGE
     res.status(200).json({
       success: true,
       message: "Schedule added successfully!",
+      data: result
     });
   } catch (error) {
     return res.status(400).json(error.message);
@@ -163,6 +158,62 @@ const viewAllSchedule = asyncHandler(async (req, res) => {
   }
 });
 
+/*******************************************************************
+ * VIEW A SCHEDULE BY A CREATOR
+ *  ******************************************************************/
+const viewScheduleByCreator = asyncHandler(async (req, res) => {
+  try {
+    const { creatorId } = req.params;
+
+    //VALIDATE MONGODB ID
+    mongodbIdValidator(creatorId);
+
+    console.log(creatorId);
+
+    const schedule = await Schedule.findOne({creatorId});
+
+    if (!schedule) {
+      return res.status(400).json({
+        success: false,
+        message: "Schedule do not exist!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: [schedule],
+    });
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+});
+
+const viewAnyFromSchedules = asyncHandler(async (req, res) => {
+  try {
+    // Extract all fields from request body
+    const query = req.body;
+
+    // If the query is empty, fetch all schedules, otherwise fetch schedules based on query
+    const schedules = query && Object.keys(query).length > 0 
+      ? await Schedule.find(query) 
+      : await Schedule.find();
+
+    if (schedules.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No schedules found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: schedules,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 const byDaySchedule = asyncHandler(async (req, res) => {
   try {
     const { buyerId, day } = req.body; // Assume day is passed as 0 (Sunday) to 6 (Saturday), and 10 for all days
@@ -206,5 +257,7 @@ module.exports = {
   deleteSchedule,
   viewSchedule,
   viewAllSchedule,
-  byDaySchedule
+  viewScheduleByCreator,
+  byDaySchedule,
+  viewAnyFromSchedules
 };

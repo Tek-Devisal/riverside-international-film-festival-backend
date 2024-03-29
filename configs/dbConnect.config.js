@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectToDatabase = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {dbName:'riverside', useNewUrlParser: true,
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {dbName:'riverside', 
     writeConcern: {
       w: 1 // This sets the write concern to 1
     }});

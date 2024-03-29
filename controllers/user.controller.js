@@ -21,40 +21,74 @@ const OTPs = {};
  */
 const signup = asyncHandler(async (req, res) => {
   try {
-    //Take inputs from the request
+    // Take inputs from the request
     const { email, password, username, role } = req.body;
 
-    //Check for inputs in required fields
+    // Check for inputs in required fields
     if (!email || !password || !username) {
       return res.status(400).json({
         success: false,
         message: "A required field was not provided",
       });
     }
-    //Check if email already exists
-    if (await User.findOne({ email }))
+    
+    // Check if email already exists
+    const existingEmailUser = await User.findOne({ email });
+    if (existingEmailUser) {
       return res.status(400).json({
         success: false,
-        message: "User already exists",
+        message: "Email already exists",
       });
+    }
 
-    //Create new user
-    new User({
+    // Check if username already exists
+    const existingUsernameUser = await User.findOne({ username });
+    if (existingUsernameUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Username already exists",
+      });
+    }
+
+    // Create new user
+    await new User({
       email,
       password,
       username,
       role,
     }).save();
 
-    //Send a success message
+    // Send a success message
     res.status(200).json({
       success: true,
       message: "Account created successfully!",
+      user: {
+        _id: '1',
+        username: username,
+        email: email,
+        token: 'pass',
+      }
     });
   } catch (error) {
-    return res.status(400).json(error.message);
+    // Check if the error is a duplicate key error
+    if (error.code === 11000 && error.keyPattern && error.keyValue) {
+      // Handle duplicate key error (username or email already exists)
+      if (error.keyPattern.username) {
+        return res.status(400).json({
+          success: false,
+          message: "Username already exists",
+        });
+      } else if (error.keyPattern.email) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already exists",
+        });
+      }
+    }
+    return res.status(400).json({ success: false, message: error.message });
   }
 });
+
 
 /********************************************************************************************************************************************
  * Login

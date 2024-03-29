@@ -17,7 +17,7 @@
 
 - [Node.js](https://nodejs.org/) (>=12.0.0)
 - [npm](https://www.npmjs.com/) (>=6.0.0)
-- [MongoDB](https://www.mongodb.com/) (Make sure MongoDB is installed and running)
+- [MongoDB](https://www.mongodb.com/) (Make sure MongoDB is installed and runnning)
 
 ### Installing Dependencies
 

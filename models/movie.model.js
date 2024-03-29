@@ -16,7 +16,6 @@ const movieSchema = new mongoose.Schema(
     genre: {
       type: String,
       trim: true,
-      unique: true,
       required: false,
       default: "action"
     },
@@ -64,7 +63,7 @@ const movieSchema = new mongoose.Schema(
         image: {
           filename: String,
           contentType: String,
-          data: Buffer,
+          // data: Buffer,
         },
       },
     ],

@@ -11,11 +11,14 @@ const fs = require("fs");
  * CREATE A MOVIE
  *  ******************************************************************/
 const createMovie = asyncHandler(async (req, res) => {
+  // Movie.dropIndex("genre_1");
+
   try {
     const {
       creatorId,
       name,
       duration,
+      genre,
       releasedDate,
       description,
       rating,
@@ -26,7 +29,7 @@ const createMovie = asyncHandler(async (req, res) => {
 
     // Access the uploaded file details
     const { originalname, mimetype, buffer } = req.file;
-
+    // console.log(req.file.originalname);
     //REQUIRED FIELDS
     if (!name || !duration || !releasedDate || !description) {
       return res.status(400).json({
@@ -43,11 +46,11 @@ const createMovie = asyncHandler(async (req, res) => {
       });
 
     // Save the file to the specified folder
-    const targetPath = path.join(__dirname, "uploads", originalname);
+    const targetPath = path.join(__dirname, "..", "uploads", originalname);
     fs.writeFileSync(targetPath, buffer);
 
     //CREATE NEW MOVIE
-    new Movie({
+    const savedMovie = new Movie({
       thumbnail: {
         filename: req.file.originalname,
         contentType: req.file.mimetype,
@@ -56,18 +59,22 @@ const createMovie = asyncHandler(async (req, res) => {
       creatorId,
       name,
       duration,
+      genre,
       releasedDate,
       description,
       rating,
       likes,
       disLikes,
       cast,
-    }).save();
+    });
+    
+    savedMovie.save();
 
     //SEND A SUCCESS MESSAGE
     res.status(200).json({
       success: true,
       message: "Movie added successfully!",
+      data: savedMovie
     });
   } catch (error) {
     return res.status(400).json(error.message);
@@ -213,19 +220,26 @@ const viewAllMovie = asyncHandler(async (req, res) => {
   }
 });
 
-/*******************************************************************
+/********************************************************************
  * VIEW ALL MOVIE BY GENRE
  * ******************************************************************/
 const viewAllMovieByGenre = asyncHandler(async (req, res) => {
   try {
-    const { genre } = req.body;
+    const { genre, creatorId } = req.body;
     
-    console.log(genre)
+    console.log(genre, creatorId);
     
-    // Build the query conditionally based on the genre parameter
+    // Initialize an empty query object
     let query = {};
+
+    // Conditionally add genre to the query if it's not 'all'
     if (genre && genre.toLowerCase() !== 'all') {
       query.genre = genre;
+    }
+
+    // Conditionally add creatorId to the query if it's provided
+    if (creatorId) {
+      query.creatorId = creatorId;
     }
   
     // Use the query object directly in the find() method
@@ -234,7 +248,7 @@ const viewAllMovieByGenre = asyncHandler(async (req, res) => {
     if (movies.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No movies found!",
+        message: "No movies found matching the criteria!",
       });
     }
   
@@ -245,8 +259,8 @@ const viewAllMovieByGenre = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
-  
 });
+
 
 // const viewAllMovieByGenreV2 = asyncHandler(async (req, res) => {
 //   try {
