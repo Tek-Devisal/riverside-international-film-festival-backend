@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(cors());
 
 //serve static files from the 'uploads' directory
-// app.use('/uploads', express.static(path.join(__dirname, "..", 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // app.use('/uploads', express.static('/uploads'));
 
 //API connections
@@ -49,9 +49,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to the backend :)");
 });
 
-app.get('/uploads/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname + '/uploads/' + req.params.filename));
-});
+// app.get('/uploads/:filename', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/uploads/' + req.params.filename));
+// });
 
 //Listening on a specified port
 app.listen(process.env.PORT, () => {

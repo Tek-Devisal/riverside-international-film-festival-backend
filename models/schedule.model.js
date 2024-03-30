@@ -11,7 +11,7 @@ const scheduleSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Movie",
       required: true,
-      unique: true,
+      // unique: true,
     },
     location: {
       type: String,

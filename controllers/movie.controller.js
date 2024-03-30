@@ -11,8 +11,6 @@ const fs = require("fs");
  * CREATE A MOVIE
  *  ******************************************************************/
 const createMovie = asyncHandler(async (req, res) => {
-  // Movie.dropIndex("genre_1");
-
   try {
     const {
       creatorId,
@@ -21,16 +19,21 @@ const createMovie = asyncHandler(async (req, res) => {
       genre,
       releasedDate,
       description,
-      rating,
+      original_language,
+      directors,
+      country_origin,
+      trailer,
+      socials,
+      ratings,
       likes,
-      disLikes,
+      dislikes,
       cast,
     } = req.body;
 
     // Access the uploaded file details
     const { originalname, mimetype, buffer } = req.file;
-    // console.log(req.file.originalname);
-    //REQUIRED FIELDS
+
+    // REQUIRED FIELDS
     if (!name || !duration || !releasedDate || !description) {
       return res.status(400).json({
         success: false,
@@ -38,23 +41,24 @@ const createMovie = asyncHandler(async (req, res) => {
       });
     }
 
-    //CHECK IF MOVIE ALREADY EXIST
-    if (await Movie.findOne({ name }))
+    // CHECK IF MOVIE ALREADY EXISTS
+    if (await Movie.findOne({ name })) {
       return res.status(400).json({
         success: false,
         message: "Movie already exists!",
       });
+    }
 
     // Save the file to the specified folder
     const targetPath = path.join(__dirname, "..", "uploads", originalname);
     fs.writeFileSync(targetPath, buffer);
 
-    //CREATE NEW MOVIE
+    // CREATE NEW MOVIE
     const savedMovie = new Movie({
       thumbnail: {
-        filename: req.file.originalname,
-        contentType: req.file.mimetype,
-        data: req.file.buffer,
+        filename: originalname,
+        contentType: mimetype,
+        data: buffer,
       },
       creatorId,
       name,
@@ -62,15 +66,20 @@ const createMovie = asyncHandler(async (req, res) => {
       genre,
       releasedDate,
       description,
-      rating,
+      original_language,
+      directors,
+      country_origin,
+      trailer,
+      socials,
+      ratings,
       likes,
-      disLikes,
+      dislikes,
       cast,
     });
     
-    savedMovie.save();
+    await savedMovie.save();
 
-    //SEND A SUCCESS MESSAGE
+    // SEND A SUCCESS MESSAGE
     res.status(200).json({
       success: true,
       message: "Movie added successfully!",

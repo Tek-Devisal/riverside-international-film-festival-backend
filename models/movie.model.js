@@ -36,6 +36,30 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    original_language:{
+      type: String, 
+      required: false,
+      default: "English"
+    },
+    directors:{
+      type: String,
+      required: false
+    },
+    country_origin:{
+      type: String, 
+      required: false, 
+      default: "United States"
+    },
+    trailer:{
+      type: String, 
+      required: false, 
+    },
+    socials:{
+        website: String, 
+        twitter: String,
+        facebook: String,
+        instagram: String
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -19,11 +19,11 @@ const createSchedule = asyncHandler(async (req, res) => {
     }
 
     //CHECK IF SCHEDULE ALREADY EXIST
-    if (await Schedule.findOne({ movieId }))
-      return res.status(400).json({
-        success: false,
-        message: "Schedule already exists!",
-      });
+    // if (await Schedule.findOne({ movieId }))
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Schedule already exists!",
+    //   });
 
     //CREATE NEW SCHEDULE
     const result =  await Schedule.create({...req.body});
@@ -216,27 +216,22 @@ const viewAnyFromSchedules = asyncHandler(async (req, res) => {
 
 const byDaySchedule = asyncHandler(async (req, res) => {
   try {
-    const { buyerId, day } = req.body; // Assume day is passed as 0 (Sunday) to 6 (Saturday), and 10 for all days
-    // Fetch tickets for the buyer and populate both schedule and movie details
-    const tickets = await ticket_purchasesModel.find({ buyerId }).populate({
-      path: 'scheduleId',
-      populate: {
-        path: 'movieId',
-        model: 'Movie' // Ensure this matches the name of your movie model
-      }
-    });
+    const { day } = req.body; // Assume day is passed as 0 (Sunday) to 6 (Saturday), and 10 for all days
 
-    // Filter tickets based on the specified day, unless day is 10 which fetches all schedules
-    const filteredSchedules = tickets.filter(ticket => {
+    // Fetch all schedules and populate movie details
+    const schedules = await Schedule.find().populate('movieId');
+
+    // Filter schedules based on the specified day, unless day is 10 which fetches all schedules
+    const filteredSchedules = schedules.filter(schedule => {
       if (day === 10) {
-        // If day is 10, return true for all tickets to include all schedules
+        // If day is 10, return true for all schedules to include all schedules
         return true;
       } else {
         // Otherwise, filter by the specified day
-        const scheduleDate = new Date(ticket.scheduleId.date);
+        const scheduleDate = new Date(schedule.date);
         return scheduleDate.getDay() === day;
       }
-    }).map(ticket => ticket.scheduleId); // Directly use scheduleId which already includes movie details
+    });
 
     // Respond with filtered schedules
     res.status(200).json({
@@ -247,7 +242,6 @@ const byDaySchedule = asyncHandler(async (req, res) => {
     console.error("Failed to fetch schedules by day:", error);
     res.status(400).json({ success: false, message: error.message });
   }
-
 });
 
 

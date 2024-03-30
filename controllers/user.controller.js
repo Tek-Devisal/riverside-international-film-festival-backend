@@ -138,6 +138,7 @@ const login = asyncHandler(async (req, res) => {
           email: user.email,
           username: user.username,
           token: token,
+          role: user.role
         },
       });
     } else {
