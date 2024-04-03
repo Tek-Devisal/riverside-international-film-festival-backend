@@ -12,6 +12,7 @@ const {
   signup,
   verifyOtp,
   generateOtp,
+  deleteUser
 } = require("../controllers/user.controller");
 const { authenticate } = require("../middlewares/auth.middleware");
 
@@ -21,6 +22,7 @@ router.post("/signup", signup);
 router.post("/password-token", passwordToken);
 router.post("/generate-otp", generateOtp);
 router.post("/verify-otp", verifyOtp);
+router.post("/delete-user", deleteUser);
 
 //Get routes
 router.get("/logout", logout);

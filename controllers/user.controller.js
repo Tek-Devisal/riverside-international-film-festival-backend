@@ -67,6 +67,7 @@ const signup = asyncHandler(async (req, res) => {
         username: username,
         email: email,
         token: 'pass',
+        role: 'user'
       }
     });
   } catch (error) {
@@ -422,7 +423,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
   try {
     const storedOtp = OTPs[email];
     const { enteredOtp } = req.body;
-
+    
     if (storedOtp === enteredOtp) {
       // OTP is correct
       res.status(200).json({
@@ -440,6 +441,55 @@ const verifyOtp = asyncHandler(async (req, res) => {
     res.status(400).json(error.message);
   }
 });
+/********************************************************************************************************************************************
+ * DELETE ACCOUNT
+ */
+const deleteUser = asyncHandler(async (req, res) => {
+  try {
+    // Take inputs from the request
+    const { email } = req.body;
+
+    // Check if email is provided
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required to delete the account",
+      });
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    // If user not found, return error
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Delete the user
+    await user.deleteOne();
+
+    // Send a success message
+    res.status(200).json({
+      success: true,
+      message: "Account deleted successfully!",
+      user: {
+        _id: "1",
+        email: '',
+        username: '',
+        token: '',
+        role: ''
+      },
+    });
+  } catch (error) {
+    // Handle errors
+    return res.status(400).json({ success: false, message: error.message });
+  }
+});
+
+
 
 module.exports = {
   login,
@@ -453,4 +503,5 @@ module.exports = {
   tokenBlacklist,
   generateOtp,
   verifyOtp,
+  deleteUser
 };
