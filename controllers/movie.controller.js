@@ -58,7 +58,7 @@ const createMovie = asyncHandler(async (req, res) => {
       thumbnail: {
         filename: originalname,
         contentType: mimetype,
-        data: buffer,
+        // data: buffer,
       },
       creatorId,
       name,
