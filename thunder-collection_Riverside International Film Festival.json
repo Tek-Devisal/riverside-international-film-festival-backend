@@ -1,0 +1,1008 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Riverside International Film Festival",
+    "collectionId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+    "dateExported": "2024-04-30T10:56:58.914Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Tickets",
+            "containerId": "",
+            "created": "2024-03-01T19:09:19.680Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Movies",
+            "containerId": "",
+            "created": "2024-03-01T19:09:19.684Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Users",
+            "containerId": "",
+            "created": "2024-03-01T19:09:19.685Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Schedules",
+            "containerId": "",
+            "created": "2024-03-01T19:09:19.686Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "4a603205-4442-4972-a192-2554dd018674",
+            "name": "Analytics",
+            "containerId": "",
+            "created": "2024-03-08T07:32:27.534Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9266f4f6-6d98-4b40-8adf-79113236ff52",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Add a ticket",
+            "url": "localhost:3000/api/v1/ticket/add",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-01T19:09:19.685Z",
+            "modified": "2024-03-08T01:21:58.005Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"creatorId\": \"6599dfbd58a7daa449f7452d\",\n    \"movieId\": \"6599dfbd58a7daa449f74625\",\n    \"scheduleId\": \"6599dfbd58a7daa449f7562d\",\n    \"quantity\": \"3\",\n    \"price\": \"250\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg2MDg5OSwiZXhwIjoxNzA5ODY0NDk5fQ.BPPp-5fOOLejyA3Zz-mTxmevyqy5qtSBjW7VeTnXZZ4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f1d86d33-b2e5-4f8f-9b00-54049166a23b",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Purchase a ticket",
+            "url": "localhost:3000/api/v1/ticket/purchaseTicket",
+            "method": "POST",
+            "sortNum": 15000,
+            "created": "2024-03-03T11:34:31.278Z",
+            "modified": "2024-03-08T01:33:47.455Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"buyerId\": \"65e3cfef9c171b9f63d2c9a3\",\n    \"movieId\": \"65e900fd86be09d6198d886c\",\n    \"scheduleId\": \"65e9ddaf0229f628fb9fc6d6\",\n    \"quantity\": 1,\n    \"price\": 250\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg2MTQyNiwiZXhwIjoxNzA5ODY1MDI2fQ.cBo4tGF1TEWDM8W6T7fyPuGzBa1ecZgFjtdJgeGkQhs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "eb771783-8d97-424e-9b45-221ce41d1097",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Get a ticket",
+            "url": "{{ticket}}/{id}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-01T19:09:19.688Z",
+            "modified": "2024-03-01T19:09:19.688Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df15869039eae89f8a5bc4",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "622d9618-9f0d-456c-bbc6-11bbc6ca0c53",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Fetch tickets by creator",
+            "url": "localhost:3000/api/v1/ticket/fetchTicketByCreatorId/65e3cfef9c171b9f63d2c9a3",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2024-03-03T10:09:30.132Z",
+            "modified": "2024-03-08T01:26:28.360Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"creatorId\": \"65e3cfef9c171b9f63d2c9a3\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg2MDg5OSwiZXhwIjoxNzA5ODY0NDk5fQ.BPPp-5fOOLejyA3Zz-mTxmevyqy5qtSBjW7VeTnXZZ4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f1c3eaec-554f-436a-995a-c3833d0b4f58",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Fetch tickets by movie and schedule",
+            "url": "localhost:3000/api/v1/ticket/fetchByMovieAndSchedule",
+            "method": "POST",
+            "sortNum": 26250,
+            "created": "2024-03-08T03:26:44.986Z",
+            "modified": "2024-03-08T03:54:20.540Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"movieId\": \"65e900fd86be09d6198d886c\",\n  \"scheduleId\": \"65e9ddaf0229f628fb9fc6d6\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg2ODcyMywiZXhwIjoxNzA5ODcyMzIzfQ.RNAgWdSU8gdcrDGYIRWKvkPrQgw4_16Syntve0MLOvo"
+            },
+            "tests": []
+        },
+        {
+            "_id": "41e26956-4a23-458b-bd84-aa9cef8206fe",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Fetch tickets by buyer",
+            "url": "localhost:3000/api/v1/ticket/fetchTicketsByBuyerId/65e3cfef9c171b9f63d2c9a3",
+            "method": "GET",
+            "sortNum": 27500,
+            "created": "2024-03-03T11:23:52.164Z",
+            "modified": "2024-03-08T01:26:58.168Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"buyerId\": \"65e3cfef9c171b9f63d2c9a3\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg2MDg5OSwiZXhwIjoxNzA5ODY0NDk5fQ.BPPp-5fOOLejyA3Zz-mTxmevyqy5qtSBjW7VeTnXZZ4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b88083fe-8eb8-4e3f-a2da-67216b5cb32d",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Get all ticket",
+            "url": "localhost:3000/api/v1/ticket/",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-01T19:09:19.689Z",
+            "modified": "2024-03-03T00:46:20.445Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTIyYTQ5ZDdlMTk5NWFmODUyNGQ4ZiIsImlhdCI6MTcwOTQyNjc2OSwiZXhwIjoxNzA5NDMwMzY5fQ.LY5HC8C36Um3A5zlYaF1jICGE1RW-ysHJSBxFXgwr3k"
+            },
+            "tests": []
+        },
+        {
+            "_id": "123e4fb0-c132-47a3-a502-a4f1402c3d80",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Delete a ticket",
+            "url": "{{ticket}}/delete/{id}",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-03-01T19:09:19.690Z",
+            "modified": "2024-03-01T19:09:19.690Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df15869039eae89f8a5bc4",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "0c8ae1b9-1923-43ae-a2c9-41708f5c7c62",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "3892f15c-56ab-46c4-9cff-de6ce94332bc",
+            "name": "Update a ticket",
+            "url": "{{ticket}}/update/{id}",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2024-03-01T19:09:19.691Z",
+            "modified": "2024-03-01T19:09:19.691Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df15869039eae89f8a5bc4",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"quantity\": \"400\",\r\n    \"price\": \"2345\"\r\n}"
+            }
+        },
+        {
+            "_id": "f142caab-5e7d-4e86-877d-7df81611cdbd",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Add a movie",
+            "url": "localhost:3000/api/v1/movie/add",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-03-01T19:09:19.692Z",
+            "modified": "2024-03-30T17:32:55.324Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/octet-stream",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "creatorId",
+                        "value": "6608071b7b94613ed8e81a82"
+                    },
+                    {
+                        "name": "name",
+                        "value": "An Open Door. - Temple Grandin"
+                    },
+                    {
+                        "name": "duration",
+                        "value": "60"
+                    },
+                    {
+                        "name": "genre",
+                        "value": "documentary"
+                    },
+                    {
+                        "name": "releasedDate",
+                        "value": "2024"
+                    },
+                    {
+                        "name": "description",
+                        "value": "An Open Door is the international award-winning documentary that reflects on the influential life and work of Dr. Temple Grandin as a champion of the humane treatment of livestock, autism rights, and inclusive neurodiversity by employing her gifted insights from her personal experience with autism and visual thinking. The film speaks with Dr. Grandin, her colleagues, industry professionals and those she has influenced to celebrate her groundbreaking life, lessons learned and lasting legacy."
+                    },
+                    {
+                        "name": "data",
+                        "value": "\"one\"",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "original_language",
+                        "value": "English",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "directors",
+                        "value": "John Alexander Barnhardt"
+                    },
+                    {
+                        "name": "country_origin",
+                        "value": "United States"
+                    },
+                    {
+                        "name": "trailer",
+                        "value": "https://www.youtube.com/watch?v=1SCViJJwYvY"
+                    },
+                    {
+                        "name": "socials[website]",
+                        "value": "http://templegrandindocumentary.com"
+                    },
+                    {
+                        "name": "socials[twitter]",
+                        "value": "https://twitter.com",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "socials[facebook]",
+                        "value": "https://socials.com",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "socials[instagram]",
+                        "value": "https://www.instagram.com/thetemplegrandinproject/"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "thumbnail",
+                        "value": "/Users/jesse/Documents/Tek Devisal/MAX PROJECT/posters/AbounaPoster.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDgwNzFiN2I5NDYxM2VkOGU4MWE4MiIsImlhdCI6MTcxMTgxNzM5MSwiZXhwIjoxNzExODIwOTkxfQ.MCw9QsIhRJF0DQKfgSPwh4_xoIw9SoMRUgy4y-1Oy3E"
+            },
+            "tests": []
+        },
+        {
+            "_id": "6ecd997c-980a-4213-b218-c1aaf26072c9",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Get a movie",
+            "url": "{{movie}}/{id}",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-03-01T19:09:19.693Z",
+            "modified": "2024-03-02T23:43:37.876Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df1dd0948149edd8b895ec",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "441e38ea-b89b-42ea-aee6-0b2157bd62f9",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Get all movies",
+            "url": "localhost:3000/api/v1/movie/",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-03-01T19:09:19.695Z",
+            "modified": "2024-03-01T20:10:06.830Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTIyYTQ5ZDdlMTk5NWFmODUyNGQ4ZiIsImlhdCI6MTcwOTMyMzY0MCwiZXhwIjoxNzA5MzI3MjQwfQ.JkJ2fPdKPbrLfdKhkaNbUjfw_Pi8dC-FnsNVyTwAhfE"
+            },
+            "tests": []
+        },
+        {
+            "_id": "17733ec3-a4dc-4ea4-bbcf-6ecb0533d1fc",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "fetch likes and dislikes",
+            "url": "localhost:3000/api/v1/movie/likes-dislikes/65e3d0854307e0dce82da79d",
+            "method": "GET",
+            "sortNum": 82500,
+            "created": "2024-03-03T22:32:12.596Z",
+            "modified": "2024-03-03T22:33:16.333Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTUwNTE3NiwiZXhwIjoxNzA5NTA4Nzc2fQ.xFxup430AFcdVsyBJbWsvbfvGOK4aqDuoRkwM9uqspg"
+            },
+            "tests": []
+        },
+        {
+            "_id": "1931599d-8638-40f0-9ca7-a52a249aa2dd",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Get movies by genre",
+            "url": "localhost:3000/api/v1/movie/moviesByGenre",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2024-03-03T16:18:36.409Z",
+            "modified": "2024-03-07T15:52:43.280Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"genre\": \"romance\",\n  \"creatorId\": \"65e3cfef9c171b9f63d2c9a3\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTgyNjY0OCwiZXhwIjoxNzA5ODMwMjQ4fQ.Jxu4Sxij2jFVp-Afie26RACOxQKCp3hE5LeDcmqkw-M"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ef81e7c8-58cd-47e3-b49c-502e23472cce",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Delete a movie",
+            "url": "{{movie}}/delete/{id}",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2024-03-01T19:09:19.696Z",
+            "modified": "2024-03-01T19:09:19.696Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df1dd0948149edd8b895ec",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "13ca07ca-f447-40f3-a11c-e0c61d7e67e3",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Update a movie",
+            "url": "{{movie}}/update/{id}",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2024-03-01T19:09:19.697Z",
+            "modified": "2024-03-01T19:09:19.697Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65df1dd0948149edd8b895ec",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"name\": \"Avatar 3\",\r\n    \"duration\": \"225min\",\r\n    \"releasedDate\": \"2009\"\r\n}"
+            }
+        },
+        {
+            "_id": "145787db-e190-4a01-8ffa-bdf59a15daf3",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Like a movie",
+            "url": "localhost:3000/api/v1/movie/like/65e3d0854307e0dce82da79d",
+            "method": "PUT",
+            "sortNum": 110000,
+            "created": "2024-03-01T19:09:19.698Z",
+            "modified": "2024-03-03T21:53:00.022Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTUwMjcyMSwiZXhwIjoxNzA5NTA2MzIxfQ.Yu3o_uiSY5IgWgxFSFBUW4knj176LQvWNuHg-gu0kkU"
+            },
+            "tests": []
+        },
+        {
+            "_id": "cc7ac8df-a013-4621-a3e6-548ceb7acac9",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Dislike a movie",
+            "url": "localhost:3000/api/v1/movie/dislike/65e3d0854307e0dce82da79d",
+            "method": "PUT",
+            "sortNum": 120000,
+            "created": "2024-03-01T19:09:19.699Z",
+            "modified": "2024-03-04T00:12:48.476Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTUxMTE2MSwiZXhwIjoxNzA5NTE0NzYxfQ.42gcPjwBNKcXb7fOCPtaZ21ZeZe-YzfAG7WbFBH2Q-s"
+            },
+            "tests": []
+        },
+        {
+            "_id": "01071997-299f-4a8b-9081-b86e7f01b692",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "7518d894-dc45-40af-9479-6c0ba854d2b8",
+            "name": "Rate a movie",
+            "url": "{{movie}}/rate/{id}",
+            "method": "PUT",
+            "sortNum": 130000,
+            "created": "2024-03-01T19:09:19.700Z",
+            "modified": "2024-03-01T19:09:19.700Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "7dfc9a16-c6fb-46b8-9213-9c67e42694d0",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Login",
+            "url": "localhost:3000/api/v1/user/login",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2024-03-01T19:09:19.701Z",
+            "modified": "2024-04-06T13:09:45.947Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n   \"email\": \"iamjesse75@gmail.com\",\n    \"password\": \"Sheet$55\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "93c06fd8-e34d-4173-aa89-3a27c703c5da",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Delete User",
+            "url": "localhost:3000/api/v1/user/delete-user",
+            "method": "POST",
+            "sortNum": 145000,
+            "created": "2024-04-03T14:54:17.387Z",
+            "modified": "2024-04-03T14:54:34.596Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n   \"email\": \"creator@riverside.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "929ef8b1-5871-479e-a0bf-9e09dac92194",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Create Account",
+            "url": "localhost:3000/api/v1/user/signup",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2024-03-01T19:09:19.702Z",
+            "modified": "2024-03-03T01:19:36.953Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": \"sgyan1\",\n    \"email\": \"sethgyan587@gmail.com\",\n    \"role\": \"user\",\n    \"password\": \"Yomonii1z\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5cd1cd73-94fe-4b94-a01d-48b61aada5c7",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Generate OTP",
+            "url": "{{user}}/generate-otp",
+            "method": "POST",
+            "sortNum": 160000,
+            "created": "2024-03-01T19:09:19.703Z",
+            "modified": "2024-03-01T19:09:19.703Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"email\": \"sethgyan587@gmail.com\"\r\n}"
+            }
+        },
+        {
+            "_id": "59ddc03f-6798-4005-bd66-a05cac25fa66",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Verify OTP",
+            "url": "{{user}}/verify-otp",
+            "method": "POST",
+            "sortNum": 170000,
+            "created": "2024-03-01T19:09:19.704Z",
+            "modified": "2024-03-01T19:09:19.704Z",
+            "headers": []
+        },
+        {
+            "_id": "54bcf4be-7609-4bd8-8a4b-63c537f1cf64",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Password Reset Token",
+            "url": "{{user}}/password-token",
+            "method": "POST",
+            "sortNum": 180000,
+            "created": "2024-03-01T19:09:19.705Z",
+            "modified": "2024-03-01T19:09:19.705Z",
+            "headers": []
+        },
+        {
+            "_id": "89e6ace0-d93b-457f-adb1-5a0eea4cd819",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Refresh",
+            "url": "{{user}}/refresh",
+            "method": "GET",
+            "sortNum": 190000,
+            "created": "2024-03-01T19:09:19.706Z",
+            "modified": "2024-03-01T19:09:19.706Z",
+            "headers": []
+        },
+        {
+            "_id": "80fd7a2c-f0d1-42e1-b2e8-46271e763697",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Logout",
+            "url": "{{user}}/logout",
+            "method": "GET",
+            "sortNum": 200000,
+            "created": "2024-03-01T19:09:19.707Z",
+            "modified": "2024-03-01T19:09:19.707Z",
+            "headers": []
+        },
+        {
+            "_id": "979e697a-d84f-4f73-8307-ea5c53f387be",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Update user",
+            "url": "{{user}}/update",
+            "method": "PUT",
+            "sortNum": 210000,
+            "created": "2024-03-01T19:09:19.708Z",
+            "modified": "2024-03-01T19:09:19.708Z",
+            "headers": []
+        },
+        {
+            "_id": "85768eb4-c8f6-426e-b7e3-8973005e2a96",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Update Password",
+            "url": "{{user}}/update-password",
+            "method": "PUT",
+            "sortNum": 220000,
+            "created": "2024-03-01T19:09:19.709Z",
+            "modified": "2024-03-01T19:09:19.709Z",
+            "headers": []
+        },
+        {
+            "_id": "8ddfbfd2-4d08-4f4a-b372-3afd1b87cbad",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "9e84ffd7-dbfd-47fc-9f8b-3e73fcbedb35",
+            "name": "Reset Password",
+            "url": "{{user}}/reset-password/{token}",
+            "method": "PUT",
+            "sortNum": 230000,
+            "created": "2024-03-01T19:09:19.710Z",
+            "modified": "2024-03-01T19:09:19.710Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "token",
+                    "value": "",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "41e1cc71-5e73-4203-bc82-feeeebacf933",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Add a schedule",
+            "url": "localhost:3000/api/v1/schedule/add",
+            "method": "POST",
+            "sortNum": 240000,
+            "created": "2024-03-01T19:09:19.711Z",
+            "modified": "2024-03-07T14:28:29.091Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"creatorId\": \"65e3d012e3d0a1c50e8af358\",\n    \"movieId\": \"65e3d0a899229518f392ca0b\",\n    \"location\": \"Kumasi\",\n    \"time\": \"2024-01-06T20:18:21.800+00:00\",\n    \"date\": \"2024-01-06T20:18:21.800+00:00\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTgyMTY5MywiZXhwIjoxNzA5ODI1MjkzfQ.2j-w32u-2gLiwki3yyk-53Wv9L5BrfSQwepEpUAZMNs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e8348325-4f4f-409d-b7c0-9b16936c3565",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Get a schedule",
+            "url": "{{schedule}}/{id}",
+            "method": "GET",
+            "sortNum": 250000,
+            "created": "2024-03-01T19:09:19.712Z",
+            "modified": "2024-03-01T19:09:19.712Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65def676cdc2a0e92080c809",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "110bd756-d76a-4057-9e36-7689a3652a5d",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Get a schedule by day",
+            "url": "localhost:3000/api/v1/schedule/fetchScheduleByDay",
+            "method": "POST",
+            "sortNum": 255000,
+            "created": "2024-03-03T12:11:43.041Z",
+            "modified": "2024-04-10T08:32:15.473Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"day\": 3\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMjczNzE4OCwiZXhwIjoxNzEyODIzNTg4fQ.hMimfSHlhO9mJ2RVgjqlPHZ32ph1p8dJVox5hW-Eml0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b3132c3a-73f0-4a5d-932e-91049a37642c",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "update Schedules Timezone to PDT",
+            "url": "localhost:3000/api/v1/schedule/updateSchedulesTimezone",
+            "method": "POST",
+            "sortNum": 257500,
+            "created": "2024-04-10T08:42:04.095Z",
+            "modified": "2024-04-10T08:52:58.640Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMjczNzE4OCwiZXhwIjoxNzEyODIzNTg4fQ.hMimfSHlhO9mJ2RVgjqlPHZ32ph1p8dJVox5hW-Eml0"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3ff72aca-0daa-404b-a6b7-8fbc1acd915c",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Get all schedule",
+            "url": "localhost:3000/api/v1/schedule/",
+            "method": "GET",
+            "sortNum": 260000,
+            "created": "2024-03-01T19:09:19.713Z",
+            "modified": "2024-03-08T05:34:16.808Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"location\": \"Haatso\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTg3NjAxMSwiZXhwIjoxNzA5ODc5NjExfQ.SV-GwlA-Mn5wnVLtPVFTdXLZBM1MmAYa0APLt-vjzoY"
+            },
+            "tests": []
+        },
+        {
+            "_id": "588198ba-5410-40f1-b84b-7fa59c557493",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Get all schedule per Creator",
+            "url": "localhost:3000/api/v1/schedule/fetchByCreator/65e3cfef9c171b9f63d2c9a3",
+            "method": "GET",
+            "sortNum": 265000,
+            "created": "2024-03-07T17:21:15.611Z",
+            "modified": "2024-03-07T17:26:53.517Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTgzMDk0OCwiZXhwIjoxNzA5ODM0NTQ4fQ.9PMEqQ7v8kOhuBuAGmj32HtFVwHBx6zHYF0XcXGgYrM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f60617ee-9065-4f0b-81c0-ac95d4a218cf",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "fetch Any Field From Schedules",
+            "url": "localhost:3000/api/v1/schedule/viewAnyFromSchedules",
+            "method": "POST",
+            "sortNum": 267500,
+            "created": "2024-03-08T04:44:56.168Z",
+            "modified": "2024-03-08T13:11:17.472Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"movieId\": \"65e92b96f82c1c1454317701\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTNjZmVmOWMxNzFiOWY2M2QyYzlhMyIsImlhdCI6MTcwOTkwMzQ2MywiZXhwIjoxNzA5OTA3MDYzfQ.2aLCA384xIXnlI9-qtxzZ1YRqH0gzCgg1HkOLj3DM00"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3054e81b-59c1-480c-852d-aeabd1b1d9d1",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Delete a schedule",
+            "url": "{{schedule}}/delete/{id}",
+            "method": "DELETE",
+            "sortNum": 270000,
+            "created": "2024-03-01T19:09:19.714Z",
+            "modified": "2024-03-01T19:09:19.714Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65def676cdc2a0e92080c809",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "fba1e5e8-99b3-45fa-b934-972cdedc4ad4",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "075666cb-4eb0-4a4b-abf6-c37e0543387d",
+            "name": "Update a schedule",
+            "url": "{{schedule}}/update/{id}",
+            "method": "PUT",
+            "sortNum": 280000,
+            "created": "2024-03-01T19:09:19.715Z",
+            "modified": "2024-03-01T19:09:19.715Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65def676cdc2a0e92080c809",
+                    "isDisabled": false,
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"location\": \"Kumasi\"\r\n}"
+            }
+        },
+        {
+            "_id": "753d6888-0e7e-43c2-907a-a13d06e14c14",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "",
+            "name": "Default",
+            "url": "{{base}}",
+            "method": "GET",
+            "sortNum": 290000,
+            "created": "2024-03-01T19:09:19.716Z",
+            "modified": "2024-03-01T19:09:19.716Z",
+            "headers": []
+        },
+        {
+            "_id": "ae4e64f7-06d2-40e3-ae61-468f94bdc757",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "",
+            "name": "picture",
+            "url": "localhost:3000/uploads/gra.png",
+            "method": "GET",
+            "sortNum": 300000,
+            "created": "2024-03-07T00:58:35.413Z",
+            "modified": "2024-03-27T11:12:44.845Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "df5fe409-6c52-4370-a3ef-05becd552c66",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "4a603205-4442-4972-a192-2554dd018674",
+            "name": "total likes and dislikes",
+            "url": "localhost:3000/api/v1/analytics/total-likes-dislikes/65e3cfef9c171b9f63d2c9a3",
+            "method": "GET",
+            "sortNum": 310000,
+            "created": "2024-03-08T07:32:45.428Z",
+            "modified": "2024-04-14T21:27:53.103Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMzEzMDA2MCwiZXhwIjoxNzEzMjE2NDYwfQ.u41woog4SHm3-yqphqJbyv1o5UPIdBG26aRHQXTeErM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "34cd5771-3ab5-4262-ae3b-e6ef3899ae48",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "4a603205-4442-4972-a192-2554dd018674",
+            "name": "get All likes and dislikes",
+            "url": "localhost:3000/api/v1/analytics/get-all-likes-and-dislikes",
+            "method": "POST",
+            "sortNum": 315000,
+            "created": "2024-04-14T21:36:25.641Z",
+            "modified": "2024-04-14T21:37:00.768Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMzEzMDA2MCwiZXhwIjoxNzEzMjE2NDYwfQ.u41woog4SHm3-yqphqJbyv1o5UPIdBG26aRHQXTeErM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b98cf3bb-ba80-4618-b768-8dfe1e8ff550",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "4a603205-4442-4972-a192-2554dd018674",
+            "name": "countUsers",
+            "url": "localhost:3000/api/v1/analytics/count-users",
+            "method": "POST",
+            "sortNum": 317500,
+            "created": "2024-04-14T22:06:47.772Z",
+            "modified": "2024-04-14T22:07:12.026Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMzEzMDA2MCwiZXhwIjoxNzEzMjE2NDYwfQ.u41woog4SHm3-yqphqJbyv1o5UPIdBG26aRHQXTeErM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9b6994f3-fa0f-4b26-9d80-85b0f9b431b0",
+            "colId": "a619cc48-c00a-48e7-88a2-5e069dff1709",
+            "containerId": "4a603205-4442-4972-a192-2554dd018674",
+            "name": "movies by genre",
+            "url": "localhost:3000/api/v1/analytics/movie-by-genre",
+            "method": "GET",
+            "sortNum": 320000,
+            "created": "2024-04-06T13:08:27.702Z",
+            "modified": "2024-04-14T21:28:05.879Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGVjOWQ1ZWYyNDNhMGQ4ZTAxMmM5OSIsImlhdCI6MTcxMzEzMDA2MCwiZXhwIjoxNzEzMjE2NDYwfQ.u41woog4SHm3-yqphqJbyv1o5UPIdBG26aRHQXTeErM"
+            },
+            "tests": []
+        }
+    ],
+    "settings": {
+        "preReq": {
+            "inlineScripts": [
+                {
+                    "script": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        "postReq": {
+            "inlineScripts": [
+                {
+                    "script": [
+                        ""
+                    ]
+                }
+            ]
+        }
+    },
+    "ref": "ZFwj18PK3x8Vk51d4DYbZMy6_v8nhiYiL2HcWNFfzRe4PDU1QS_PtP-RWJesoFqOJCXujiGbVjM6xdQganQyHQ"
+}
