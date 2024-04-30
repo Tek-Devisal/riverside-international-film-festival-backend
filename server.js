@@ -48,10 +48,13 @@ app.use(notFound);
 //Connecting to database
 connectToDatabase();
 
+process.env.TZ = 'America/Los_Angeles';
+
 app.get("/", (req, res) => {
   res.send("Welcome to the backend :)");
 });
 
+console.log("TZ environment variable:", process.env.TZ);
 
 // app.get('/uploads/:filename', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/uploads/' + req.params.filename));

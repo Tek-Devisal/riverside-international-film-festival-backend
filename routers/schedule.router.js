@@ -9,7 +9,8 @@ const {
   viewAllSchedule,
   viewScheduleByCreator,
   byDaySchedule,
-  viewAnyFromSchedules
+  viewAnyFromSchedules,
+  updateSchedulesTimezone
 } = require("../controllers/schedule.controller");
 const { authenticate, creator } = require("../middlewares/auth.middleware");
 
@@ -17,6 +18,7 @@ const { authenticate, creator } = require("../middlewares/auth.middleware");
 router.post("/add", authenticate, creator, createSchedule);
 router.post("/fetchScheduleByDay", authenticate, byDaySchedule);
 router.post("/viewAnyFromSchedules", authenticate, viewAnyFromSchedules);
+router.post("/updateSchedulesTimezone", authenticate, updateSchedulesTimezone);
 
 //Get routes
 router.get("/:id", authenticate, viewSchedule);

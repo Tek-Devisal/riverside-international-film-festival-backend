@@ -2,6 +2,7 @@ const Schedule = require("../models/schedule.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
 const ticket_purchasesModel = require("../models/ticket_purchases.model.js");
+const moment = require('moment-timezone');
 
 /*******************************************************************
  * CREATE A SCHEDULE
@@ -229,6 +230,7 @@ const byDaySchedule = asyncHandler(async (req, res) => {
       } else {
         // Otherwise, filter by the specified day
         const scheduleDate = new Date(schedule.date);
+        // console.log(scheduleDate.getUTCDay());
         return scheduleDate.getDay() === day;
       }
     });
@@ -244,6 +246,40 @@ const byDaySchedule = asyncHandler(async (req, res) => {
   }
 });
 
+const updateSchedulesTimezone = asyncHandler(async (req, res) => {
+  try {
+    // Fetch all schedules
+    const schedules = await Schedule.find();
+
+    // Loop through each schedule and update the date and time fields
+    for (const schedule of schedules) {
+      // Extract the date and time fields
+      const { date, time } = schedule;
+
+      // Convert the date and time from PDT to GMT
+      const newDate = moment.utc(date).add(7, 'hours');
+      const newTime = moment.utc(time).add(7, 'hours');
+
+      // Update the date and time fields in the schedule document
+      schedule.date = newDate.toDate();
+      schedule.time = newTime.toDate();
+
+      // Save the updated schedule document
+      await schedule.save();
+
+      // console.log(newDate.toDate());
+    }
+
+    console.log('Date and time fields updated successfully');
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Failed to update date and time fields:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
+
 
 module.exports = {
   createSchedule,
@@ -253,5 +289,6 @@ module.exports = {
   viewAllSchedule,
   viewScheduleByCreator,
   byDaySchedule,
-  viewAnyFromSchedules
+  viewAnyFromSchedules,
+  updateSchedulesTimezone
 };

@@ -1,6 +1,7 @@
 const Movie = require("../models/movie.model.js");
 const asyncHandler = require("express-async-handler");
 const mongodbIdValidator = require("../configs/mongoIdValidator.config");
+const userModel = require("../models/user.model.js");
 
 
 const totalLikesDislikesPerCreator = asyncHandler(async (req, res) => {
@@ -131,10 +132,47 @@ const getMoviesByGenre = async (req, res) => {
   }
 };
 
+// Route to get total likes and dislikes for all movies
+const getAllLikesAndDislikes = async (req, res) => {
+  try {
+    const totals = await Movie.aggregate([
+      {
+        $project: {
+          name: 1, // Include movie name in the result
+          totalLikes: { $size: "$likes" },
+          totalDislikes: { $size: "$dislikes" }
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Total likes and dislikes for all movies retrieved successfully!",
+      data: totals
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Failed to retrieve likes and dislikes",
+      error: error.message
+    });
+  }
+};
+
+const countUsers = async () => {
+  try {
+      const userCount = await userModel.countDocuments();
+      console.log(`There are ${userCount} users in the database.`);
+  } catch (error) {
+      console.error('Error fetching user count:', error);
+  }
+};
 
 module.exports = {
     totalLikesDislikesPerCreator, 
     totalLikesDislikesPerMovie,
-    getMoviesByGenre
+    getMoviesByGenre,
+    getAllLikesAndDislikes,
+    countUsers
 };
   

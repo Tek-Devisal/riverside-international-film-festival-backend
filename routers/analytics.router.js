@@ -5,6 +5,8 @@ const {
   totalLikesDislikesPerCreator,
   getMoviesByGenre,
   totalLikesDislikesPerMovie,
+  getAllLikesAndDislikes,
+  countUsers
 } = require("../controllers/analytics.controller");
 
 
@@ -12,6 +14,9 @@ const {
 router.get("/total-likes-dislikes/:creatorId", authenticate, totalLikesDislikesPerCreator);
 router.get("/total-likes-dislikes-per-movie/:movieId", authenticate, totalLikesDislikesPerMovie);
 router.get("/movie-by-genre", authenticate, getMoviesByGenre);
+
+router.post("/get-all-likes-and-dislikes", authenticate, getAllLikesAndDislikes);
+router.post("/count-users", authenticate, countUsers);
 
 // router.get("/:id", upload.single("thumbnail"), authenticate, viewMovie);
 // router.get("/", authenticate, viewAllMovie);
